@@ -1,35 +1,54 @@
-int x,y;
+float x,y;
+int i=0;
 
 PImage images[]=new PImage[3];//Array of images for Steph.
 
 void setup()
 {
   size(800,600);
-  images[0]=loadImage("");
-  
+  images[0]=loadImage("0.jpg");//background 1
+  images[1]=loadImage("1.jpg");//need lockers
   
 }
 void draw()
 {
   background(0);
-  
- // image(joey,475289,4325894,543908,34);
+  image(images[i],0,0,800,600);
+  point(x,0);
+  if(i==0)//anything that happens on the first image
+  {
+    ellipse(x,y,50,50);
+    //ellipse(width/2,height/2,50,50);
+    y=(-.4732)*x+620;//an eqation based off of two points
+    if(keyPressed)
+    {
+      if(keyCode==UP)
+      {
+        //add a jump maybe
+      }
+      if(keyCode==DOWN)
+      {
+      }
+      if(keyCode==LEFT)
+      {
+        x--;
+      }
+      if(keyCode==RIGHT)
+      {
+        x++;
+      }
+    }
+  if(x>=626)
+  {
+    i++;
+  }
+  }
+
+
+
+  println("X"+mouseX);
+  println("Y"+mouseY);
+
 }
-void keyPressed()
-{
-  if(keyCode==UP)
-  {
-  }
-  if(keyCode==DOWN)
-  {
-  }
-  if(keyCode==LEFT)
-  {
-    x--;
-  }
-  if(keyCode==RIGHT)
-  {
-    x++;
-  }
-}
+
 
