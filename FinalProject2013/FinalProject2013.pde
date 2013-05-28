@@ -1,8 +1,9 @@
 float x,y;
 int i=0;
 int n;
-int b=0;
+int b;
 boolean bo=false;
+int bmove=0;
 
 
 PImage images[]=new PImage[3];//Array of images for Steph.
@@ -50,7 +51,7 @@ void draw()
     if(x>=626)
     {
       i++;
-      n=int(random(0,8));
+      n=int(random(0,6));
     }
   }
   
@@ -75,12 +76,27 @@ void draw()
       
   }if(bo==true)
       {
-        image(bomb[b],0,200,50,50);
-        //image(bomb[b],0,height-bomb[b].height,50,50);
+
+        bmove+=3;//bomb walking 
+        if(bmove%16==0)
+        {
+          //b=!b;
         if(b==0)
           b=1;
-        if(b==1)
+        else if(b==1)
           b=0;
+        }
+        
+       image(bomb[b],bmove,200,50,50);
+        //image(bomb[b],0,height-bomb[b].height,50,50);
+        if(bmove>=width)//resets all values when the bomb reaches the end
+        {
+          i=0;
+          bo=false;
+          bmove=0;
+          x=0;
+        }
+
       }
       
     }
