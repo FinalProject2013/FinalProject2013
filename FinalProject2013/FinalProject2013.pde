@@ -1,4 +1,4 @@
-float x,y;
+float xjoey,yjoey;
 int i=0;
 int n;
 int b;
@@ -8,6 +8,7 @@ int bmove=0;
 
 PImage images[]=new PImage[3];//Array of images for Steph.
 PImage bomb[]=new PImage[2];//bombs
+PImage lockerkey;
 PImage joeyChar;
 void setup()
 {
@@ -17,18 +18,19 @@ void setup()
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
+  lockerkey=loadImage("lockerkey.png");
 }
 void draw()
 {
   background(0);
 //  print(bo);
   image(images[i],0,0,800,600);
-  point(x,0);
+  point(xjoey,0);
   if(i==0)//anything that happens on the first image
   {
-    ellipse(x,y,50,50);
-    image(joeyChar,x-50,y-50,100,100);
-    y=(-.4732)*x+620;//an eqation based off of two points
+    ellipse(xjoey,yjoey,50,50);
+    image(joeyChar,xjoey-50,yjoey-50,100,100);
+    yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
     if(keyPressed)
     {
       if(keyCode==UP)
@@ -40,15 +42,15 @@ void draw()
       }
       if(keyCode==LEFT)
       {
-        x-=3;
+        xjoey-=3;
       }
       if(keyCode==RIGHT)
       {
-        x+=3;
+        xjoey+=3;
       }
     }
     
-    if(x>=626)
+    if(xjoey>=626)
     {
       i++;
       n=int(random(0,6));
@@ -65,6 +67,7 @@ void draw()
       {
         //key
         println("WINNER");
+        image(lockerkey,width/2-250,height/2-50,500,100);
       }
       else
       {
@@ -73,8 +76,8 @@ void draw()
 
       }
       
-      
-  }if(bo==true)
+  }
+  if(bo==true)
       {
 
         bmove+=3;//bomb walking 
@@ -87,18 +90,18 @@ void draw()
           b=0;
         }
         
-       image(bomb[b],bmove,200,50,50);
+       image(bomb[b],bmove,500,100,100);
         //image(bomb[b],0,height-bomb[b].height,50,50);
         if(bmove>=width)//resets all values when the bomb reaches the end
         {
           i=0;
           bo=false;
           bmove=0;
-          x=0;
+          xjoey=0;
         }
 
       }
-      
+  
     }
 
 
