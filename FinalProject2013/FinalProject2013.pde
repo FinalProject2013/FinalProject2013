@@ -9,12 +9,20 @@ int bmove=0;
 //for the video:
 import processing.video.*;
 Movie explosion;
+int newtime=0;
+
+int oldtime=0;
+int p=0;
 
 
 PImage images[]=new PImage[3];//Array of images for Steph.
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
+
+
+
+
 void setup()
 {
   size(800,600);
@@ -107,14 +115,28 @@ void draw()
         //image(bomb[b],0,height-bomb[b].height,50,50);
         if(bmove>=width)//resets all values when the bomb reaches the end
         {
+          if(p==0)
+          {
+            oldtime=millis();
+          }
+          newtime=millis();
+          p++;
           //movie:
-            tint(255, 20);
-            image(explosion, 0, 0);
+          rect(0,0,width,height);
+            //tint(255, 20);
+            image(explosion, 0, 0,800,600);
+           
+           
             
-          i=0;
-          bo=false;
-          bmove=0;
-          xjoey=0;
+            if(newtime-oldtime>=8000)
+            {
+              i=0;
+              bo=false;
+              bmove=0;
+              xjoey=0;
+            }
+            
+
         }
 
       }
