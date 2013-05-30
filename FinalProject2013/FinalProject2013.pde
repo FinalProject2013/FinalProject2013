@@ -3,7 +3,12 @@ int i=0;
 int n;
 int b;
 boolean bo=false;
+boolean ke=false;
 int bmove=0;
+
+//for the video:
+import processing.video.*;
+Movie explosion;
 
 
 PImage images[]=new PImage[3];//Array of images for Steph.
@@ -19,6 +24,10 @@ void setup()
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
   lockerkey=loadImage("lockerkey.png");
+  
+  //video:
+  explosion = new Movie(this, "SpongebobExplosion.mov");
+  explosion.loop();
 }
 void draw()
 {
@@ -28,7 +37,7 @@ void draw()
   point(xjoey,0);
   if(i==0)//anything that happens on the first image
   {
-    ellipse(xjoey,yjoey,50,50);
+    //ellipse(xjoey,yjoey,50,50);
     image(joeyChar,xjoey-50,yjoey-50,100,100);
     yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
     if(keyPressed)
@@ -36,6 +45,9 @@ void draw()
       if(keyCode==UP)
       {
         //add a jump maybe
+        yjoey+=10;
+        //THIS IS NOT DONE KTHXBAI
+        
       }
       if(keyCode==DOWN)
       {
@@ -67,7 +79,8 @@ void draw()
       {
         //key
         println("WINNER");
-        image(lockerkey,width/2-250,height/2-50,500,100);
+        ke=true;
+        
       }
       else
       {
@@ -94,6 +107,10 @@ void draw()
         //image(bomb[b],0,height-bomb[b].height,50,50);
         if(bmove>=width)//resets all values when the bomb reaches the end
         {
+          //movie:
+            tint(255, 20);
+            image(explosion, 0, 0);
+            
           i=0;
           bo=false;
           bmove=0;
@@ -103,11 +120,28 @@ void draw()
       }
   
     }
-
+  if(ke==true)
+  {
+    image(lockerkey,width/2-250,height/2-50,500,100);
+    if(mousePressed)
+    {
+     i=2; //this is the next background
+     //I STILL NEED THIS 
+     //Gerstein's room
+    }
+  }
+  if(i==2)
+  {
+    //Gerstein's room here.
+  }
 
   println("X"+mouseX);
   println("Y"+mouseY);
 
 }
 
-
+//movie:
+void movieEvent(Movie m)
+{
+  m.read();
+}
