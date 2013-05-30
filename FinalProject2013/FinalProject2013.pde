@@ -79,7 +79,12 @@ void draw()
   
   if(i==1)
   {
-     
+    if(mouseX>=50&&mouseX<=width-50&&mouseY>=50&&mouseY<=height-50)
+    {
+      cursor(HAND);
+    } 
+    else
+      cursor(ARROW);
     if(mousePressed)
     {
      
@@ -124,16 +129,18 @@ void draw()
           //movie:
           rect(0,0,width,height);
             //tint(255, 20);
+            cursor(WAIT);
             image(explosion, 0, 0,800,600);
            
            
             
-            if(newtime-oldtime>=8000)
+            if(newtime-oldtime>=5000)
             {
               i=0;
               bo=false;
               bmove=0;
               xjoey=0;
+              cursor(ARROW);
             }
             
 
