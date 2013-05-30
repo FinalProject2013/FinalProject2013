@@ -141,6 +141,7 @@ void draw()
               bmove=0;
               xjoey=0;
               cursor(ARROW);
+              p=0;
             }
             
 
