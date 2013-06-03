@@ -22,6 +22,7 @@ PImage joeyChar;
 
 
 PImage speech []= new PImage [3];//Speech bubbles 1
+int q=0;
 //PImage techClassroom;
 
 
@@ -180,12 +181,37 @@ void draw()
        //I STILL NEED THIS 
        //Gerstein's room
        ke=false;
+       p=0;
       }
     }
   }
   if(i==2)
   {
+    image(joeyChar,xjoey-50,yjoey-50,100,100);
     cursor(ARROW);
+    
+    if(p==0)
+    {
+    oldtime=millis();
+    }
+    p++;
+    newtime=millis();
+    if(newtime-oldtime>=5000)
+    {
+      q++;
+      p=0;
+    }
+    if(q<=2)
+    {
+      xjoey=100;
+      yjoey=500;
+      image(speech[q],0,0);
+    }
+    else
+    {
+    }
+      
+    
    // background(0);
     //image(techClassroom,0,0,800,600);
   }
