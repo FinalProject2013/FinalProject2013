@@ -21,6 +21,9 @@ PImage lockerkey;
 PImage joeyChar;
 
 
+PImage speech []= new PImage [3];//Speech bubbles 1
+//PImage techClassroom;
+
 
 
 void setup()
@@ -28,6 +31,7 @@ void setup()
   size(800,600);
   images[0]=loadImage("0.jpg");//background 1
   images[1]=loadImage("1.jpg");//need lockers
+  images[2]=loadImage("2.jpg");
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
@@ -36,6 +40,11 @@ void setup()
   //video:
   explosion = new Movie(this, "SpongebobExplosion.mov");
   explosion.loop();
+  
+  speech[0]=loadImage("Speech1!.png");
+  speech[1]=loadImage("Speech2!.png");
+  speech[2]=loadImage("Speech3!.png");
+  //techClassroom=loadImage("techClassroom.jpg");
 }
 void draw()
 {
@@ -73,7 +82,9 @@ void draw()
     if(xjoey>=626)
     {
       i++;
-      n=int(random(0,6));
+      //n=int(random(0,6));
+      //FOR DEBUGGING PURPOSES ALWAYS WIN
+      n=5;
     }
   }
   
@@ -153,16 +164,30 @@ void draw()
   if(ke==true)
   {
     image(lockerkey,width/2-250,height/2-50,500,100);
-    if(mousePressed)
+    if(p==0)
     {
-     i=2; //this is the next background
-     //I STILL NEED THIS 
-     //Gerstein's room
+    oldtime=millis();
+    }
+    p++;
+    newtime=millis();
+    if(newtime-oldtime>=1000)
+    {
+      cursor(HAND);
+    
+      if(mousePressed)
+      {
+       i=2; //this is the next background
+       //I STILL NEED THIS 
+       //Gerstein's room
+       ke=false;
+      }
     }
   }
   if(i==2)
   {
-    //Gerstein's room here.
+    cursor(ARROW);
+   // background(0);
+    //image(techClassroom,0,0,800,600);
   }
 
   println("X"+mouseX);
