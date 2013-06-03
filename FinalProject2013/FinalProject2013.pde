@@ -15,7 +15,7 @@ int oldtime=0;
 int p=0;
 
 
-PImage images[]=new PImage[3];//Array of images for Steph.
+PImage images[]=new PImage[4];//Array of images for Steph.
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
@@ -25,14 +25,16 @@ PImage speech []= new PImage [3];//Speech bubbles 1
 int q=0;
 //PImage techClassroom;
 
-
+//PImage escalator;
+PImage blackHole;
 
 void setup()
 {
   size(800,600);
   images[0]=loadImage("0.jpg");//background 1
   images[1]=loadImage("1.jpg");//need lockers
-  images[2]=loadImage("2.jpg");
+  images[2]=loadImage("2.jpg");//gersteins
+  images[3]=loadImage("3.jpg");  //escalator
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
@@ -46,6 +48,9 @@ void setup()
   speech[1]=loadImage("Speech2!.png");
   speech[2]=loadImage("Speech3!.png");
   //techClassroom=loadImage("techClassroom.jpg");
+  
+   // escalator=loadImage("escalator.jpg");
+  blackHole=loadImage("blackHole.png");
 }
 void draw()
 {
@@ -58,27 +63,7 @@ void draw()
     //ellipse(xjoey,yjoey,50,50);
     image(joeyChar,xjoey-50,yjoey-50,100,100);
     yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
-    if(keyPressed)
-    {
-      if(keyCode==UP)
-      {
-        //add a jump maybe
-        yjoey+=10;
-        //THIS IS NOT DONE KTHXBAI
-        
-      }
-      if(keyCode==DOWN)
-      {
-      }
-      if(keyCode==LEFT)
-      {
-        xjoey-=3;
-      }
-      if(keyCode==RIGHT)
-      {
-        xjoey+=3;
-      }
-    }
+
     
     if(xjoey>=626)
     {
@@ -209,11 +194,24 @@ void draw()
     }
     else
     {
+      yjoey=500;
     }
-      
+   if(xjoey>=width-50)
+  {
+    i=3;
+  }  
     
    // background(0);
     //image(techClassroom,0,0,800,600);
+  }
+  if(n==3)
+  {
+    //image(escalator,0,0,800,600);//THIS WILL BE CHANGED PLEASE
+    yjoey=(2.318)*xjoey+50;
+    xjoey++;
+    image(blackHole,330,500,300,200);
+    image(joeyChar,xjoey-50+175,yjoey-50,100,100);
+  
   }
 
   println("X"+mouseX);
@@ -226,3 +224,25 @@ void movieEvent(Movie m)
 {
   m.read();
 }
+void keyPressed()
+    {
+      if(keyCode==UP)
+      {
+        //add a jump maybe
+        yjoey-=10;
+        //THIS IS NOT DONE KTHXBAI
+        
+      }
+      if(keyCode==DOWN)
+      {
+        yjoey+=10;
+      }
+      if(keyCode==LEFT)
+      {
+        xjoey-=3;
+      }
+      if(keyCode==RIGHT)
+      {
+        xjoey+=3;
+      }
+    }
