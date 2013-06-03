@@ -199,12 +199,13 @@ void draw()
    if(xjoey>=width-50)
   {
     i=3;
+    xjoey=100;
   }  
     
    // background(0);
     //image(techClassroom,0,0,800,600);
   }
-  if(n==3)
+  if(i==3)
   {
     //image(escalator,0,0,800,600);//THIS WILL BE CHANGED PLEASE
     yjoey=(2.318)*xjoey+50;
