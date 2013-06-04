@@ -1,10 +1,12 @@
 float xjoey,yjoey;
-int i=0;
+int i=2;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
 boolean ke=false;
 int bmove=0;
+
+int xspeech=0;
 
 //for the video:
 import processing.video.*;
@@ -23,9 +25,7 @@ PImage joeyChar;
 
 PImage speech []= new PImage [3];//Speech bubbles 1
 int q=0;
-//PImage techClassroom;
 
-//PImage escalator;
 PImage blackHole;
 
 void setup()
@@ -47,9 +47,8 @@ void setup()
   speech[0]=loadImage("Speech1!.png");
   speech[1]=loadImage("Speech2!.png");
   speech[2]=loadImage("Speech3!.png");
-  //techClassroom=loadImage("techClassroom.jpg");
-  
-   // escalator=loadImage("escalator.jpg");
+
+
   blackHole=loadImage("blackHole.png");
 }
 void draw()
@@ -63,7 +62,6 @@ void draw()
     //ellipse(xjoey,yjoey,50,50);
     image(joeyChar,xjoey-50,yjoey-50,100,100);
     yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
-
     
     if(xjoey>=626)
     {
@@ -84,21 +82,18 @@ void draw()
       cursor(ARROW);
     if(mousePressed)
     {
-     
       if(n==5)
       {
         //key
         println("WINNER");
         ke=true;
-        
       }
       else
       {
         bo=true;
         //bomb 
-
       }
-      
+
   }
   if(bo==true)
       {
@@ -129,8 +124,6 @@ void draw()
             cursor(WAIT);
             image(explosion, 0, 0,800,600);
            
-           
-            
             if(newtime-oldtime>=5000)
             {
               i=0;
@@ -140,12 +133,8 @@ void draw()
               cursor(ARROW);
               p=0;
             }
-            
-
         }
-
       }
-  
     }
   if(ke==true)
   {
@@ -163,7 +152,6 @@ void draw()
       if(mousePressed)
       {
        i=2; //this is the next background
-       //I STILL NEED THIS 
        //Gerstein's room
        ke=false;
        p=0;
@@ -190,29 +178,41 @@ void draw()
     {
       xjoey=100;
       yjoey=500;
-      image(speech[q],0,0);
+      if(q==1)
+      {
+        xspeech=300;
+      }
+      else
+      {
+        xspeech=0;
+      }
+      image(speech[q],xspeech,0);
+      
     }
     else
     {
       yjoey=500;
     }
    if(xjoey>=width-50)
-  {
-    i=3;
-    xjoey=100;
-  }  
-    
-   // background(0);
-    //image(techClassroom,0,0,800,600);
+    {
+      i=3;
+      xjoey=100;
+    }  
   }
   if(i==3)
   {
-    //image(escalator,0,0,800,600);//THIS WILL BE CHANGED PLEASE
     yjoey=(2.318)*xjoey+50;
     xjoey++;
     image(blackHole,330,500,300,200);
     image(joeyChar,xjoey-50+175,yjoey-50,100,100);
-  
+    if(yjoey>=500)
+    {
+      i++;
+    }
+  if(i==4)//NEXT LEVEL 
+  {
+    
+  }
   }
 
   println("X"+mouseX);
