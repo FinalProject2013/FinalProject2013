@@ -1,5 +1,5 @@
 float xjoey,yjoey;
-int i=2;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -42,7 +42,7 @@ void setup()
   
   //video:
   explosion = new Movie(this, "SpongebobExplosion.mov");
-  explosion.loop();
+//  explosion.loop();
   
   speech[0]=loadImage("Speech1!.png");
   speech[1]=loadImage("Speech2!.png");
@@ -59,6 +59,7 @@ void draw()
   point(xjoey,0);
   if(i==0)//anything that happens on the first image
   {
+    explosion.stop();
     //ellipse(xjoey,yjoey,50,50);
     image(joeyChar,xjoey-50,yjoey-50,100,100);
     yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
@@ -68,7 +69,8 @@ void draw()
       i++;
       //n=int(random(0,6));
       //FOR DEBUGGING PURPOSES ALWAYS WIN
-      n=5;
+      //n=5;
+      n=4;
     }
   }
   
@@ -122,6 +124,9 @@ void draw()
           rect(0,0,width,height);
             //tint(255, 20);
             cursor(WAIT);
+            explosion.play();
+              //explosion.loop();
+            
             image(explosion, 0, 0,800,600);
            
             if(newtime-oldtime>=5000)
@@ -132,6 +137,7 @@ void draw()
               xjoey=0;
               cursor(ARROW);
               p=0;
+              explosion.stop();
             }
         }
       }
@@ -225,6 +231,7 @@ void movieEvent(Movie m)
 {
   m.read();
 }
+
 void keyPressed()
     {
       if(keyCode==UP)
