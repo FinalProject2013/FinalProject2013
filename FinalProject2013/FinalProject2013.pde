@@ -59,6 +59,7 @@ void draw()
   point(xjoey,0);
   if(i==0)//anything that happens on the first image
   {
+    moveJoey();
     explosion.stop();
     //ellipse(xjoey,yjoey,50,50);
     image(joeyChar,xjoey-50,yjoey-50,100,100);
@@ -69,8 +70,8 @@ void draw()
       i++;
       //n=int(random(0,6));
       //FOR DEBUGGING PURPOSES ALWAYS WIN
-      //n=5;
-      n=4;
+      n=5;
+      //n=4;
     }
   }
   
@@ -198,6 +199,7 @@ void draw()
     else
     {
       yjoey=500;
+      moveJoey();
     }
    if(xjoey>=width-50)
     {
@@ -231,8 +233,33 @@ void movieEvent(Movie m)
 {
   m.read();
 }
-
-void keyPressed()
+void moveJoey()
+{
+  if(keyPressed)
+  {
+    if(keyCode==UP)
+      {
+        //add a jump maybe
+        yjoey-=10;
+        //THIS IS NOT DONE KTHXBAI
+        
+      }
+      if(keyCode==DOWN)
+      {
+        yjoey+=10;
+      }
+      if(keyCode==LEFT)
+      {
+        xjoey-=3;
+      }
+      if(keyCode==RIGHT)
+      {
+        xjoey+=3;
+      }
+  }
+  
+}
+/*void keyPressed()
     {
       if(keyCode==UP)
       {
@@ -253,4 +280,4 @@ void keyPressed()
       {
         xjoey+=3;
       }
-    }
+    }*/
