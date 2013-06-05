@@ -1,5 +1,8 @@
 float xjoey,yjoey;
-int i=0;//level start CHANGE IT BACK 
+float yjoeyspeed;
+float easing;
+
+int i=4;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -17,7 +20,7 @@ int oldtime=0;
 int p=0;
 
 
-PImage images[]=new PImage[4];//Array of images for Steph.
+PImage images[]=new PImage[5];
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
@@ -28,6 +31,15 @@ int q=0;
 
 PImage blackHole;
 
+//lvl 3
+ArrayList nyancat = new ArrayList();
+PImage meteor;
+PImage joeychar;
+
+boolean start = true;
+
+boolean check;
+
 void setup()
 {
   size(800,600);
@@ -35,6 +47,9 @@ void setup()
   images[1]=loadImage("1.jpg");//need lockers
   images[2]=loadImage("2.jpg");//gersteins
   images[3]=loadImage("3.jpg");  //escalator
+  
+  images[4]=loadImage("Night Field.jpg");//field
+  
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
@@ -50,6 +65,15 @@ void setup()
 
 
   blackHole=loadImage("blackHole.png");
+  
+  
+  
+  /// lvl 3 STEPH's STUFF
+  meteor = loadImage("Nyan Nyan Cat.png");
+  joeychar = loadImage("joey.char.png");
+
+  nyancat.add(new Meteor());
+  yjoey = height-80;
 }
 void draw()
 {
@@ -217,12 +241,54 @@ void draw()
     {
       i++;
     }
-  if(i==4)//NEXT LEVEL 
+  }
+  if(i==4)//NEXT LEVEL //or level 3 cuz were totes going out of order
   {
-    
-  }
-  }
+    ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
+    if(q==0)
+    {
+      yjoey=height-80;
+      xjoey=50;
+      q++;
+    }
 
+  if(frameCount%25==0) {
+    nyancat.add(new Meteor());
+  }
+  for(int i=nyancat.size()-1; i>0; i--) {
+    Meteor cat = (Meteor)nyancat.get(i);
+    cat.display();
+    cat.move();
+    if(dist(xjoey,yjoey,cat.x+(cat.diam/2),cat.y+(cat.diam/2))<50+cat.diam/2) {
+      xjoey = 50;
+      nyancat.remove(i);
+      for(int j=nyancat.size()-1; i>0; i--) {
+        Meteor c = (Meteor)nyancat.get(j);
+        c.y = 0;
+      }
+    }
+    if(cat.life==0) {
+      nyancat.remove(i);
+    }
+  }
+  image(joeychar,xjoey-50,yjoey-50,100,100);
+  if(keyPressed) {
+    if(key==CODED) {
+      if(keyCode==LEFT) {
+        xjoey+=-2;
+      }
+      if(keyCode==RIGHT) {
+        xjoey+=2;
+      }
+    }
+  }
+    
+    if(xjoey>=width)
+    {
+      q=0;
+      i++;
+    }
+  }
   println("X"+mouseX);
   println("Y"+mouseY);
 
@@ -239,11 +305,20 @@ void moveJoey()
   {
     if(keyCode==UP)
       {
+        yjoeyspeed=-10;
+
         //add a jump maybe
-        yjoey-=10;
+        //yjoey-=10;
         //THIS IS NOT DONE KTHXBAI
         
+        
+        
+        
       }
+        easing=.1;
+        yjoeyspeed=yjoeyspeed*easing;
+        
+        yjoey+=yjoeyspeed;
       if(keyCode==DOWN)
       {
         yjoey+=10;
@@ -259,25 +334,30 @@ void moveJoey()
   }
   
 }
-/*void keyPressed()
-    {
-      if(keyCode==UP)
-      {
-        //add a jump maybe
-        yjoey-=10;
-        //THIS IS NOT DONE KTHXBAI
-        
-      }
-      if(keyCode==DOWN)
-      {
-        yjoey+=10;
-      }
-      if(keyCode==LEFT)
-      {
-        xjoey-=3;
-      }
-      if(keyCode==RIGHT)
-      {
-        xjoey+=3;
-      }
-    }*/
+class Meteor {
+  float x;
+  float y;
+  float diam = random(50,60);
+  float ySpeed = 1;
+  float xSpeed;
+  float grav = 0.1;
+  float life;
+  
+  Meteor() {
+    x = random(width);
+    xSpeed = random(-3,3);
+    life = 200;
+    y = -diam;
+  }
+  
+  void display() {
+    image(meteor,x,y,diam,diam);
+  }
+  
+  void move() {
+    x+=xSpeed;
+    y+=ySpeed;
+    ySpeed+=grav;
+    life--;
+  }
+}
