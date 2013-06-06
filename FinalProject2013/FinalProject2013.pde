@@ -2,7 +2,7 @@ float xjoey,yjoey;
 float yjoeyspeed;
 float easing;
 
-int i=4;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -20,7 +20,7 @@ int oldtime=0;
 int p=0;
 
 
-PImage images[]=new PImage[5];
+PImage images[]=new PImage[7];//backgrounds
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
@@ -40,15 +40,38 @@ boolean start = true;
 
 boolean check;
 
+//joeys screen changes
+ArrayList stars= new ArrayList();
+
+PImage star, ufo;
+float xleveltext=0;
+color c1, c2;
+int ufox=width/2+100;
+int ufoy=height;
+float angle;
+
+import ddf.minim.*;
+
+Minim minim;
+AudioPlayer rugrats;
+
+boolean screenchange=true;
+
 void setup()
 {
   size(800,600);
+  //images[0]=loadImage("c1.jpg");//blank 1
   images[0]=loadImage("0.jpg");//background 1
   images[1]=loadImage("1.jpg");//need lockers
   images[2]=loadImage("2.jpg");//gersteins
   images[3]=loadImage("3.jpg");  //escalator
+  //lvl 2
   
-  images[4]=loadImage("Night Field.jpg");//field
+  //images[5]=loadImage("4.jpg");//blank 2
+  //images[6]=loadImage("4.jpg");
+  //images[7]=loadImage("5.jpg");
+  //lvl 3
+  images[6]=loadImage("6.jpg");//field//lv 3
   
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
@@ -73,16 +96,75 @@ void setup()
   joeychar = loadImage("joey.char.png");
 
   nyancat.add(new Meteor());
-  yjoey = height-80;
+  //yjoey = height-80;
+  
+  
+    textAlign(CENTER);
+  c1=color(82, 167, 240);
+  c2=color(255, 100, 240);
+  star=loadImage("star.png");
+  ufo=loadImage("ufo.png");
+  stars.add(new Star());
+   minim = new Minim(this);
+   rugrats=minim.loadFile("RugratsBumBum!.mp3");
+   rugrats.play();
+  
+  
 }
 void draw()
 {
-  background(0);
-//  print(bo);
-  image(images[i],0,0,800,600);
-  point(xjoey,0);
-  if(i==0)//anything that happens on the first image
+  
+      
+    //joeys screen
+    background(0);
+  //  print(bo);
+    image(images[i],0,0,800,600);
+    point(xjoey,0);
+    if(i==0)//anything that happens on the first image
+    {
+      /*if(screenchange)
   {
+        for (int i = 0; i <= height; i++) {
+      float inter = map(i, 0, height, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(0, i, width, i);
+    }
+  
+  
+    if (frameCount%35==0) {
+      stars.add(new Star());
+    }
+  
+    for (int i=stars.size()-1; i>0; i--) {
+      Star star= (Star)stars.get(i);
+      star.display();
+      star.shoot();
+      if (star.life<=0) {
+        stars.remove(i);
+      }
+    }
+    String s;
+    s="Now to Level 1!";
+    textSize(50);
+    text(s, xleveltext, height/2);
+    if (xleveltext<width/2) {
+      xleveltext+=10;
+    }
+    if (xleveltext>=width/2) {
+      angle++; 
+      image(ufo, ufox, ufoy);
+      ufox+=sin(radians(angle))*-5;
+      ufoy-=cos(radians(angle))*-5;
+    }
+    if(mousePressed)
+    {
+      screenchange=!screenchange;
+    }
+  }
+    //end joey's screen change*/
+    Screen();
+    
     moveJoey();
     explosion.stop();
     //ellipse(xjoey,yjoey,50,50);
@@ -94,8 +176,8 @@ void draw()
       i++;
       //n=int(random(0,6));
       //FOR DEBUGGING PURPOSES ALWAYS WIN
-      n=5;
-      //n=4;
+      n=5;//win
+      //n=4;//lose
     }
   }
   
@@ -239,11 +321,23 @@ void draw()
     image(joeyChar,xjoey-50+175,yjoey-50,100,100);
     if(yjoey>=500)
     {
-      i++;
+      i=6;
+      screenchange=true;
     }
   }
-  if(i==4)//NEXT LEVEL //or level 3 cuz were totes going out of order
+  
+  //lvl 2
+  if(i==4)
   {
+  }
+  if(i==5)
+  {
+  }
+  
+  //vl 3
+  if(i==6)//NEXT LEVEL //or level 3 cuz were totes going out of order
+  {
+    Screen();
     ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
     if(q==0)
     {
@@ -360,4 +454,76 @@ class Meteor {
     ySpeed+=grav;
     life--;
   }
+}
+
+class Star {
+  float x;
+  float y;
+  float xSpeed;
+  float ySpeed;
+  float size;
+  float life;
+
+  Star() {
+    x=-size;
+    size=random(100, 350);
+    life=100;
+    y=random(0, height);
+    xSpeed=7;
+    ySpeed=-4;
+  }
+
+  void display() {
+    image(star, x, y, size, size);
+  }
+  void shoot() {
+    x+=xSpeed;
+    y+=ySpeed;
+    life--;
+  }
+}
+
+void Screen ()
+{
+        if(screenchange)
+  {
+        for (int i = 0; i <= height; i++) {
+      float inter = map(i, 0, height, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(0, i, width, i);
+    }
+  
+  
+    if (frameCount%35==0) {
+      stars.add(new Star());
+    }
+  
+    for (int i=stars.size()-1; i>0; i--) {
+      Star star= (Star)stars.get(i);
+      star.display();
+      star.shoot();
+      if (star.life<=0) {
+        stars.remove(i);
+      }
+    }
+    String s;
+    s="Now to Level 1!";
+    textSize(50);
+    text(s, xleveltext, height/2);
+    if (xleveltext<width/2) {
+      xleveltext+=10;
+    }
+    if (xleveltext>=width/2) {
+      angle++; 
+      image(ufo, ufox, ufoy);
+      ufox+=sin(radians(angle))*-5;
+      ufoy-=cos(radians(angle))*-5;
+    }
+    if(mousePressed)
+    {
+      screenchange=!screenchange;
+    }
+  }
+    //end joey's screen change
 }
