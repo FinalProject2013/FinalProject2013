@@ -1,14 +1,21 @@
 PImage joeychar, ring, bikinibottom, goolagoon;
+Mermaid [] mermaids = new Mermaid [3];
 float xjoey, yjoey;
 float joeyimagesize=50;
 int p=0;
 boolean nextImage=false;
+
 void setup() {
   size(800, 600);
   joeychar=loadImage("joey.char.png");
   ring=loadImage("ring.png");
   bikinibottom=loadImage("bikini bottom.jpg");
   goolagoon=loadImage("goo lagoon.jpg");
+  
+  for(int i=0;i<mermaids.length;i++)
+  {
+    mermaids[i]=new Mermaid();
+  }
 }
 
 void draw() {
@@ -31,6 +38,13 @@ void draw() {
     {
       nextImage=true;
     }
+    for (int i=0; i<mermaids.length; i++) {
+      mermaids[i].display();
+      mermaids[i].bounce();
+      if(dist(xjoey+(joeyimagesize/2),yjoey+(joeyimagesize/2),mermaids[i].x+(mermaids[i].diam/2),mermaids[i].y+(mermaids[i].diam/2))<=(joeyimagesize/2)+(mermaids[i].diam/2)) {
+      xjoey = 0;
+      }
+    }
   }
   if (nextImage) {
     image(goolagoon, 0, 0, 800, 600);
@@ -47,11 +61,9 @@ void draw() {
     if (keyCode==RIGHT)
     {
       xjoey+=3;
-      //joeyimagesize++;
     }
   }
 }
 
-//2,340
-//678,540
+
 
