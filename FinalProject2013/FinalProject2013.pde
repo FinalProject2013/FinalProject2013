@@ -56,6 +56,7 @@ Minim minim;
 AudioPlayer rugrats;
 
 boolean screenchange=true;
+int lvl=1;
 
 void setup()
 {
@@ -107,7 +108,7 @@ void setup()
   stars.add(new Star());
    minim = new Minim(this);
    rugrats=minim.loadFile("RugratsBumBum!.mp3");
-   rugrats.play();
+   //rugrats.play();
   
   
 }
@@ -165,6 +166,8 @@ void draw()
     //end joey's screen change*/
     Screen();
     
+    if(screenchange==false)
+    {
     moveJoey();
     explosion.stop();
     //ellipse(xjoey,yjoey,50,50);
@@ -178,6 +181,7 @@ void draw()
       //FOR DEBUGGING PURPOSES ALWAYS WIN
       n=5;//win
       //n=4;//lose
+    }
     }
   }
   
@@ -338,6 +342,8 @@ void draw()
   if(i==6)//NEXT LEVEL //or level 3 cuz were totes going out of order
   {
     Screen();
+    if(screenchange==false)
+    {
     ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
     if(q==0)
     {
@@ -382,6 +388,7 @@ void draw()
       q=0;
       i++;
     }
+  }
   }
   println("X"+mouseX);
   println("Y"+mouseY);
@@ -487,6 +494,8 @@ void Screen ()
 {
         if(screenchange)
   {
+ 
+    rugrats.play();
         for (int i = 0; i <= height; i++) {
       float inter = map(i, 0, height, 0, 1);
       color c = lerpColor(c1, c2, inter);
@@ -508,7 +517,8 @@ void Screen ()
       }
     }
     String s;
-    s="Now to Level 1!";
+   
+    s="Now to Level "+lvl+"!";
     textSize(50);
     text(s, xleveltext, height/2);
     if (xleveltext<width/2) {
@@ -520,10 +530,27 @@ void Screen ()
       ufox+=sin(radians(angle))*-5;
       ufoy-=cos(radians(angle))*-5;
     }
-    if(mousePressed)
+    if(q==0)
+    {
+      oldtime=millis();
+      q++;
+    }
+    newtime =millis();
+    if(newtime-oldtime>=5200)
+    {
+      //rugrats.close();
+      rugrats.pause();
+      rugrats.rewind();//THIS TIME: didnt play the screen at all the second time;
+      q=0;
+      screenchange=!screenchange;
+      lvl++;
+    }
+    
+  /*  if(mousePressed)
     {
       screenchange=!screenchange;
-    }
+     //rugrats.close();
+    }*/
   }
     //end joey's screen change
 }
