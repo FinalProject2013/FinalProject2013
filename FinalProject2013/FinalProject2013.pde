@@ -495,7 +495,7 @@ void Screen ()
         if(screenchange)
   {
  
-    rugrats.play();
+   // rugrats.play();
         for (int i = 0; i <= height; i++) {
       float inter = map(i, 0, height, 0, 1);
       color c = lerpColor(c1, c2, inter);
@@ -536,21 +536,23 @@ void Screen ()
       q++;
     }
     newtime =millis();
-    if(newtime-oldtime>=5200)
+    /*if(newtime-oldtime>=5200)
     {
       //rugrats.close();
-      rugrats.pause();
-      rugrats.rewind();//THIS TIME: didnt play the screen at all the second time;
+     // rugrats.pause();
+     // rugrats.rewind();//THIS TIME: didnt play the screen at all the second time;
       q=0;
       screenchange=!screenchange;
       lvl++;
-    }
+    }*/
     
-  /*  if(mousePressed)
+    if(mousePressed)
     {
       screenchange=!screenchange;
+      q=0;
+      lvl++;
      //rugrats.close();
-    }*/
+    }
   }
     //end joey's screen change
 }
