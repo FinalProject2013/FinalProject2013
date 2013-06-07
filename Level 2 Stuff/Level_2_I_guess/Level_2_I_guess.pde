@@ -1,4 +1,4 @@
-PImage joeychar, ring, bikinibottom, goolagoon;
+PImage joeychar, ring, bikinibottom, goolagoon, wermermaid;
 Mermaid [] mermaids = new Mermaid [3];
 float xjoey, yjoey;
 float joeyimagesize=50;
