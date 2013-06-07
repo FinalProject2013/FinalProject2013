@@ -12,7 +12,7 @@ class Mermaid {
     ySpeed=random(1,3);
   }
   void display() {
-    image(joeychar, x, y, diam, diam);
+    image(wermermaid, x, y, diam, diam);
   }
 
   void bounce () {
