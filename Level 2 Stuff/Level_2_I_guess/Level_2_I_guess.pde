@@ -11,6 +11,7 @@ void setup() {
   ring=loadImage("ring.png");
   bikinibottom=loadImage("bikini bottom.jpg");
   goolagoon=loadImage("goo lagoon.jpg");
+  wermermaid=loadImage("Mermaid Weronika Final.png");
   
   for(int i=0;i<mermaids.length;i++)
   {
