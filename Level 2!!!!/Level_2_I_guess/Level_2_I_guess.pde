@@ -27,7 +27,7 @@ void setup() {
 
   for (int i=0;i<mermaids.length;i++)
   {
-    mermaids[i]=new Mermaid(joeychar);
+    mermaids[i]=new Mermaid(wermermaid);
   }
   for (int i=0;i<bubbles.length;i++)
   {
