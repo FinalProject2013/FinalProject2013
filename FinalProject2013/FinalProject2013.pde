@@ -1,5 +1,6 @@
 float xjoey,yjoey;
 float yjoeyspeed;
+float yjoeychange;
 float easing;
 
 int i=0;//level start CHANGE IT BACK 
@@ -308,7 +309,7 @@ void draw()
     }
     else
     {
-      yjoey=500;
+     // yjoey=500;
       moveJoey();
     }
    if(xjoey>=width-50)
@@ -400,159 +401,4 @@ void movieEvent(Movie m)
 {
   m.read();
 }
-void moveJoey()
-{
-  if(keyPressed)
-  {
-    if(keyCode==UP)
-      {
-        yjoeyspeed=-10;
 
-        //add a jump maybe
-        //yjoey-=10;
-        //THIS IS NOT DONE KTHXBAI
-        
-        
-        
-        
-      }
-        easing=.1;
-        yjoeyspeed=yjoeyspeed*easing;
-        
-        yjoey+=yjoeyspeed;
-      if(keyCode==DOWN)
-      {
-        yjoey+=10;
-      }
-      if(keyCode==LEFT)
-      {
-        xjoey-=3;
-      }
-      if(keyCode==RIGHT)
-      {
-        xjoey+=3;
-      }
-  }
-  
-}
-class Meteor {
-  float x;
-  float y;
-  float diam = random(50,60);
-  float ySpeed = 1;
-  float xSpeed;
-  float grav = 0.1;
-  float life;
-  
-  Meteor() {
-    x = random(width);
-    xSpeed = random(-3,3);
-    life = 200;
-    y = -diam;
-  }
-  
-  void display() {
-    image(meteor,x,y,diam,diam);
-  }
-  
-  void move() {
-    x+=xSpeed;
-    y+=ySpeed;
-    ySpeed+=grav;
-    life--;
-  }
-}
-
-class Star {
-  float x;
-  float y;
-  float xSpeed;
-  float ySpeed;
-  float size;
-  float life;
-
-  Star() {
-    x=-size;
-    size=random(100, 350);
-    life=100;
-    y=random(0, height);
-    xSpeed=7;
-    ySpeed=-4;
-  }
-
-  void display() {
-    image(star, x, y, size, size);
-  }
-  void shoot() {
-    x+=xSpeed;
-    y+=ySpeed;
-    life--;
-  }
-}
-
-void Screen ()
-{
-        if(screenchange)
-  {
- 
-   // rugrats.play();
-        for (int i = 0; i <= height; i++) {
-      float inter = map(i, 0, height, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(0, i, width, i);
-    }
-  
-  
-    if (frameCount%35==0) {
-      stars.add(new Star());
-    }
-  
-    for (int i=stars.size()-1; i>0; i--) {
-      Star star= (Star)stars.get(i);
-      star.display();
-      star.shoot();
-      if (star.life<=0) {
-        stars.remove(i);
-      }
-    }
-    String s;
-   
-    s="Now to Level "+lvl+"!";
-    textSize(50);
-    text(s, xleveltext, height/2);
-    if (xleveltext<width/2) {
-      xleveltext+=10;
-    }
-    if (xleveltext>=width/2) {
-      angle++; 
-      image(ufo, ufox, ufoy);
-      ufox+=sin(radians(angle))*-5;
-      ufoy-=cos(radians(angle))*-5;
-    }
-    if(q==0)
-    {
-      oldtime=millis();
-      q++;
-    }
-    newtime =millis();
-    /*if(newtime-oldtime>=5200)
-    {
-      //rugrats.close();
-     // rugrats.pause();
-     // rugrats.rewind();//THIS TIME: didnt play the screen at all the second time;
-      q=0;
-      screenchange=!screenchange;
-      lvl++;
-    }*/
-    
-    if(mousePressed)
-    {
-      screenchange=!screenchange;
-      q=0;
-      lvl++;
-     //rugrats.close();
-    }
-  }
-    //end joey's screen change
-}
