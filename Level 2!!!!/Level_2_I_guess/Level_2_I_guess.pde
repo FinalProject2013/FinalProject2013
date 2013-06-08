@@ -1,4 +1,4 @@
-PImage joeychar, bikinibottom, goolagoon, volcano, ringbubble, emptybubble;
+PImage joeychar, bikinibottom, goolagoon, volcano, ringbubble, emptybubble, wermermaid;
 PImage ring, volcanospeechwin, volcanospeechlose;
 Mermaid [] mermaids = new Mermaid [3];
 Mermaid [] bubbles=new Mermaid[30];
@@ -23,6 +23,7 @@ void setup() {
   emptybubble=loadImage("bubble.png");
   volcanospeechwin=loadImage("volcanospeechwin.png");
   volcanospeechlose=loadImage("volcanospeechlose.png");
+  wermermaid=loadImage("Mermaid Weronika Final.png");
 
   for (int i=0;i<mermaids.length;i++)
   {
