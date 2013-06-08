@@ -1,7 +1,8 @@
 float xjoey,yjoey;
 float yjoeyspeed;
 float yjoeychange;
-float easing;
+
+float gravity=.5;
 
 int i=0;//level start CHANGE IT BACK 
 int n;
