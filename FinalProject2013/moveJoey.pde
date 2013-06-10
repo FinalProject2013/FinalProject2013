@@ -38,12 +38,15 @@ void moveJoey()
         }
         if(i==4)
         {
+          //yjoey=(xjoey*.29586+340)+yjoeychange;
+          //OK JUMPING GLITCHED EVERYTHING UP NOT GONNA WORK KAY
         }
-        if(i==5)
+        if(i==5)//sorry no jumping in this screen too many paths
         {
         }
         if(i==6)
         {
+         yjoey=(height-80)+yjoeychange;
         }
 
 }

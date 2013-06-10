@@ -4,7 +4,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=0;//level start CHANGE IT BACK 
+int i=6;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -361,7 +361,7 @@ void draw()
     }
     joeyimagesize=map(xjoey, 0, width, 25, 100);
     if (yjoey>=340) {
-      yjoey=xjoey*.29586+340;
+      //yjoey=xjoey*.29586+340;
       moveJoey();
     }
     if (xjoey>=width)
@@ -462,7 +462,7 @@ void draw()
     ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
     if(q==0)
     {
-      yjoey=height-80;
+      //yjoey=height-80;
       xjoey=50;
       q++;
     }
