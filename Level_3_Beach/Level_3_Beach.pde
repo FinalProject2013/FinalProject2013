@@ -1,9 +1,12 @@
 PImage beach;
 PImage boat;
+float xboat;
+
 PImage joeychar;
+
 float xjoey = -100;
 float yjoey;
-float xboat;
+
 
 void setup()
 {
@@ -11,8 +14,9 @@ void setup()
   beach = loadImage("Beach Night.jpg");
   joeychar = loadImage("joey.char.png");
   boat = loadImage("Boat Color.png");
+   xboat = width/2;
   yjoey = height-200;
-  xboat = width/2;
+ 
 }
 
 void draw()

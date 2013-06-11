@@ -4,7 +4,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=4;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -22,7 +22,7 @@ int oldtime=0;
 //int p=0;
 
 
-PImage images[]=new PImage[7];//backgrounds
+PImage images[]=new PImage[12];//backgrounds
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
@@ -77,6 +77,21 @@ boolean ringholding=false;
 boolean ringappearing=true;
 float ringx, ringy;
 
+//lvl 3 beach
+PImage boat;
+float xboat;
+//fly away dragon
+//PImage bg;
+PImage flydrag;
+//PImage joeychar;
+//float xjoey = 400;
+//float yjoey;
+float wdragon;
+float hdragon;
+float winitial = 209;
+float hinitial = 174;
+float stephs_i=1;
+
 void setup()
 {
   size(800,600);
@@ -93,7 +108,10 @@ void setup()
   images[5]=loadImage("goo lagoon.jpg");
   //lvl 3
   images[6]=loadImage("6.jpg");//field//lv 3
+  images[7]=loadImage("7.jpg");//beach
   
+  images[11]=loadImage("11.png");//cave fly away
+   
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
@@ -154,6 +172,11 @@ void setup()
   for (int i=0;i<floatingring.length;i++) {
     floatingring[i]=new Mermaid(ringbubble, 40);
   }
+  //lvl 3 beach
+  boat = loadImage("Boat Color.png");
+   xboat = width/2;
+   //fly away dragon
+    flydrag = loadImage("Flying Dragon Color.png");
   
 }
 void draw()
@@ -181,9 +204,9 @@ void draw()
     if(xjoey>=626)
     {
       i++;
-      //n=int(random(0,6));
+      n=int(random(0,6));
       //FOR DEBUGGING PURPOSES ALWAYS WIN
-      n=5;//win
+      //n=5;//win
       //n=4;//lose
     }
     }
@@ -534,6 +557,58 @@ void draw()
       i++;
     }
   }
+  }
+  if(i==7)
+  {
+    if(q==0)
+    {
+      xjoey = -100;
+      xboat = width/2;
+      yjoey = height-200;
+      q++;
+    }
+    image(joeychar,xjoey,yjoey,100,100);
+     moveJoey();
+    image(boat,xboat,460,150,50);
+    if(xjoey>width/2+25)
+    {
+      xboat = xjoey-25;
+    }
+    if(xjoey>=width)
+    {
+      q=0;
+      i=11;
+      //i++;//UNCOMMENT LATER!!!
+    }
+  }
+  if(i==8)
+  {
+    //cliff
+  }
+  if(i==9)
+  {
+    //cave
+  }
+  if(i==10)
+  {
+    //derpy dragon
+  }
+  if(i==11)
+  {
+    //fly away dragon
+    if(q==0)
+    {
+      xjoey = 400;
+       yjoey = height-130;
+      q++;
+    }
+    image(flydrag,50,150,wdragon,hdragon);
+  wdragon = winitial/stephs_i;
+  hdragon = hinitial/stephs_i;
+  stephs_i+=0.01;
+  image(joeychar,xjoey,yjoey,100,100);
+   moveJoey();
+    
   }
   println("X"+mouseX);
   println("Y"+mouseY);
