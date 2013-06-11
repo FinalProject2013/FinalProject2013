@@ -43,10 +43,14 @@ void moveJoey()
         }
         if(i==5)//sorry no jumping in this screen too many paths
         {
+          if(joeyimagesize>75){
+            yjoey=440+yjoeychange;
+         //yjoey=440+yjoeychange;
+          }
         }
         if(i==6)
         {
-         yjoey=(height-80)+yjoeychange;
+          yjoey=520+yjoeychange;
         }
 
 }

@@ -4,7 +4,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=6;//level start CHANGE IT BACK 
+int i=4;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -269,6 +269,8 @@ void draw()
     if(newtime-oldtime>=1000)
     {
       cursor(HAND);
+    String lockerkeywin= "You got the key! Click to continue to Ms.Gerstein's room!";
+    text(lockerkeywin,50,50,550,250);
     
       if(mousePressed)
       {
@@ -290,7 +292,7 @@ void draw()
     }
     p++;
     newtime=millis();
-    if(newtime-oldtime>=5000)
+    if(newtime-oldtime>=1000)
     {
       q++;
       p=0;
@@ -318,9 +320,31 @@ void draw()
    if(xjoey>=width-50)
     {
       i=3;
+      q=0;
       xjoey=100;
     }  
-  }
+    
+        
+    if(xjoey>=340&&xjoey<=600)
+    {
+      if(yjoey>=330&&yjoeyspeed<=0){
+      yjoey+=200;
+      }
+      if(yjoey>=330&&yjoeyspeed>0){
+        yjoeyspeed=0;
+      }
+    }
+//    if(yjoey>=400&&yjoeyspeed>0&&xjoey>=380&&xjoey<=455){
+//      
+//    }
+      if(yjoey>=height+50)
+      {
+        xjoey=0;
+        
+      }
+      
+    }
+  
   if(i==3)
   {
     if(q==0)
@@ -337,7 +361,10 @@ void draw()
       i++;
       screenchange=true;
       q=0;
+      p=0;
     }
+
+    
   }
   
   //lvl 2
@@ -354,6 +381,7 @@ void draw()
     if (p==0)
     {
       xjoey=2;
+      yjoey=0;
       p++;
     }
     if (yjoey<340) {
@@ -361,7 +389,7 @@ void draw()
     }
     joeyimagesize=map(xjoey, 0, width, 25, 100);
     if (yjoey>=340) {
-      //yjoey=xjoey*.29586+340;
+      yjoey=xjoey*.29586+340;
       moveJoey();
     }
     if (xjoey>=width)
@@ -406,8 +434,9 @@ void draw()
     image(volcano, 650, 0, 150, 200);
 
     moveJoey();
+    
     if (xjoey>width) {
-      yjoey=365;
+      yjoey=365;//i think this does nothing.
       joeyimagesize=75;
       xjoey=width-joeyimagesize;
     }
@@ -456,13 +485,14 @@ void draw()
   //vl 3
   if(i==6)//NEXT LEVEL //or level 3 cuz were totes going out of order
   {
+    
     Screen();
     if(screenchange==false)
     {
     ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
     if(q==0)
     {
-      //yjoey=height-80;
+      yjoey=height-80;
       xjoey=50;
       q++;
     }
