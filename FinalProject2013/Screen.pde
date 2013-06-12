@@ -38,25 +38,20 @@ void Screen ()
       ufox+=sin(radians(angle))*-5;
       ufoy-=cos(radians(angle))*-5;
     }
-    if(q==0)
-    {
-      oldtime=millis();
-      q++;
+  if (rugrats.position()<5600) {
+      rugrats.play();
     }
-    newtime =millis();
-    /*if(newtime-oldtime>=5200)
-    {
-      //rugrats.close();
-     // rugrats.pause();
-     // rugrats.rewind();//THIS TIME: didnt play the screen at all the second time;
-      q=0;
-      screenchange=!screenchange;
-      lvl++;
-    }*/
+    if (rugrats.position()>=5600) {
+      rugrats.pause();
+       String nextleveltext = "Click to go to the next level!";
+      text(nextleveltext,30,400,width-30,600);
+    }
     
-    if(mousePressed)
+    if(mousePressed&&rugrats.position()>=5600)
     {
       screenchange=!screenchange;
+     
+      rugrats.cue(0);
       q=0;
       lvl++;
      //rugrats.close();

@@ -1,10 +1,15 @@
-float xjoey,yjoey;
+PImage theadventuresof, mgmlogo;
+boolean startScreen=true;
+int c=-400;
+int d=-400;
+int e=-600;
+float xjoey, yjoey;
 float yjoeyspeed;
 float yjoeychange;
 
 float gravity=.5;
 
-int i=0;//level start CHANGE IT BACK 
+int i=6;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -55,7 +60,7 @@ float angle;
 import ddf.minim.*;
 
 Minim minim;
-AudioPlayer rugrats;
+AudioPlayer rugrats, nyancatsong, tinytim, ragtime, funsong;
 
 boolean screenchange=true;
 int lvl=1;
@@ -66,9 +71,9 @@ int lvl=1;
 //level 2:
 PImage joeychar, bikinibottom, goolagoon, volcano, ringbubble, emptybubble, wermermaid;
 PImage ring, volcanospeechwin, volcanospeechlose;
-Mermaid [] mermaids = new Mermaid [3];
-Mermaid [] bubbles=new Mermaid[30];
-Mermaid [] floatingring =new Mermaid[1];
+BouncingStuff [] mermaids = new BouncingStuff [3];
+BouncingStuff [] bubbles=new BouncingStuff[30];
+BouncingStuff [] floatingring =new BouncingStuff[1];
 float joeyimagesize=50;
 int p=0;
 boolean nextImage=false;
@@ -76,7 +81,6 @@ boolean bubble=false;
 boolean ringholding=false;
 boolean ringappearing=true;
 float ringx, ringy;
-
 //lvl 3 beach
 PImage boat;
 float xboat;
@@ -92,63 +96,69 @@ float winitial = 209;
 float hinitial = 174;
 float stephs_i=1;
 
+
 void setup()
 {
-  size(800,600);
-
+  size(800, 600);
+  theadventuresof=loadImage("theadventuresof.png");
+  mgmlogo=loadImage("mgmlogo.png");
   images[0]=loadImage("0.jpg");//background 1
   images[1]=loadImage("1.jpg");//need lockers
   images[2]=loadImage("2.jpg");//gersteins
   images[3]=loadImage("3.jpg");  //escalator
   //lvl 2
-  
- // bikinibottom=loadImage("bikini bottom.jpg");
+
+  // bikinibottom=loadImage("bikini bottom.jpg");
   //goolagoon=loadImage("goo lagoon.jpg");
   images[4]=loadImage("bikini bottom.jpg");
   images[5]=loadImage("goo lagoon.jpg");
   //lvl 3
   images[6]=loadImage("6.jpg");//field//lv 3
-  images[7]=loadImage("7.jpg");//beach
+   images[7]=loadImage("7.jpg");//beach
   
   images[11]=loadImage("11.png");//cave fly away
-   
+
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
   joeyChar=loadImage("joey.char.png");
   lockerkey=loadImage("lockerkey.png");
-  
+
   //video:
   explosion = new Movie(this, "SpongebobExplosion.mov");
-//  explosion.loop();
-  
+  //  explosion.loop();
+
   speech[0]=loadImage("Speech1!.png");
   speech[1]=loadImage("Speech2!.png");
   speech[2]=loadImage("Speech3!.png");
 
 
   blackHole=loadImage("blackHole.png");
-  
-  
-  
+
+
+
   /// lvl 3 STEPH's STUFF
   meteor = loadImage("Nyan Nyan Cat.png");
   joeychar = loadImage("joey.char.png");
 
   nyancat.add(new Meteor());
   //yjoey = height-80;
-  
-  
-    textAlign(CENTER);
+
+
+  textAlign(CENTER);
   c1=color(82, 167, 240);
   c2=color(255, 100, 240);
   star=loadImage("star.png");
   ufo=loadImage("ufo.png");
   stars.add(new Star());
-   minim = new Minim(this);
-   rugrats=minim.loadFile("RugratsBumBum!.mp3");
-   //rugrats.play();
-  
-  
+  minim = new Minim(this);
+  rugrats=minim.loadFile("RugratsBumBum!.mp3");
+  nyancatsong=minim.loadFile("Nyan Cat.mp3");
+  tinytim=minim.loadFile("Living In The Sunlight, Loving In The Moonlight.mp3");
+  ragtime=minim.loadFile("Don't Jazz Me - James Scott.mp3");
+  funsong=minim.loadFile("funsong.mp3");
+  //rugrats.play();
+
+
   //lvl 2:
   //joeychar=loadImage("joey.char.png");
   ring=loadImage("ring.png");
@@ -163,402 +173,456 @@ void setup()
 
   for (int i=0;i<mermaids.length;i++)
   {
-    mermaids[i]=new Mermaid(wermermaid);
+    mermaids[i]=new BouncingStuff(wermermaid);
   }
   for (int i=0;i<bubbles.length;i++)
   {
-    bubbles[i]=new Mermaid(emptybubble, random(30, 60));
+    bubbles[i]=new BouncingStuff(emptybubble, random(30, 60));
   }
   for (int i=0;i<floatingring.length;i++) {
-    floatingring[i]=new Mermaid(ringbubble, 40);
+    floatingring[i]=new BouncingStuff(ringbubble, 40);
   }
-  //lvl 3 beach
-  boat = loadImage("Boat Color.png");
+   boat = loadImage("Boat Color.png");
    xboat = width/2;
    //fly away dragon
     flydrag = loadImage("Flying Dragon Color.png");
-  
 }
 void draw()
 {
+  if (startScreen) {
+    if(tinytim.position()<=13000){
+   tinytim.cue(13000);
+    }
+    tinytim.play();
+    if(tinytim.position()>=tinytim.length()-10000){
+      tinytim.cue(13000);
+    }
   
-      
+    
+    background(34, 188, 242);
+    c+=8;
+    if (c>=0) {
+      c=0;
+      d+=8;
+      if (d>=0) {
+        d=0;
+        e+=8;
+        if (e>=0) {
+          e=0;
+          fill(186, 85, 211);
+          rect(570, 45, 180, 75);
+          fill(255);
+          textSize(50);
+          text("PLAY", 660, 100);
+        }
+      }
+    }
+    image(theadventuresof, 80+c, 100, 430, 150);
+    image(mgmlogo, 80, 225, 430+d, 200);
+    textSize(75);
+    fill(255, 255, 0);
+    stroke(15);
+    text("JOEY ALAMO", 295+e, 500);
+
+if(mousePressed&&mouseX>=570&&mouseX<=750&&mouseY>=45&&mouseY<=120){
+ startScreen=false;
+ tinytim.pause();
+ tinytim.cue(0);
+ fill(255);
+    }
+  }
+
+  if (!startScreen) {  
     //joeys screen
     background(0);
-  //  print(bo);
-    image(images[i],0,0,800,600);
-    point(xjoey,0);
-    if(i==0)//anything that happens on the first image
+    //  print(bo);
+    image(images[i], 0, 0, 800, 600);
+    point(xjoey, 0);
+    if (i==0)//anything that happens on the first image
     {
-      
-    Screen();
-    
-    if(screenchange==false)
-    {
-    moveJoey();
-    explosion.stop();
-    //ellipse(xjoey,yjoey,50,50);
-    image(joeyChar,xjoey-50,yjoey-50,100,100);
-    yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
-    
-    if(xjoey>=626)
-    {
-      i++;
-      n=int(random(0,6));
-      //FOR DEBUGGING PURPOSES ALWAYS WIN
-      //n=5;//win
-      //n=4;//lose
-    }
-    }
-  }
-  
-  if(i==1)
-  {
-    if(mouseX>=50&&mouseX<=width-50&&mouseY>=50&&mouseY<=height-50)
-    {
-      cursor(HAND);
-    } 
-    else
-      cursor(ARROW);
-    if(mousePressed)
-    {
-      if(n==5)
-      {
-        //key
-        println("WINNER");
-        ke=true;
-      }
-      else
-      {
-        bo=true;
-        //bomb 
-      }
 
+      Screen();
+
+      if (screenchange==false)
+      {
+        moveJoey();
+        explosion.stop();
+        //ellipse(xjoey,yjoey,50,50);
+        image(joeyChar, xjoey-50, yjoey-50, 100, 100);
+        yjoey=(-.4732)*xjoey+620;//an eqation based off of two points
+
+        if (xjoey>=626)
+        {
+          i++;
+          n=int(random(1, 6));
+          //FOR DEBUGGING PURPOSES ALWAYS WIN
+          //  n=5;//win
+          //n=4;//lose
+        }
+      }
+    }
+if((i==0||i==1||i==2||i==3)&&!screenchange){
+  ragtime.play();
+  if(ragtime.position()>=ragtime.length()){
+    ragtime.cue(0);
   }
-  if(bo==true)
+}
+if((i==4||i==5)&&!screenchange){
+  funsong.play();
+  if(funsong.position()>=funsong.length()){
+    funsong.cue(0);
+  }
+}
+    if (i==1)
+    {
+      if (mouseX>=50&&mouseX<=width-50&&mouseY>=50&&mouseY<=height-50)
+      {
+        cursor(HAND);
+      } 
+      else
+        cursor(ARROW);
+      if (mousePressed)
+      {
+        if (n==5)
+        {
+          //key
+          println("WINNER");
+          ke=true;
+        }
+        else
+        {
+          bo=true;
+          //bomb
+        }
+      }
+      if (bo==true)
       {
 
         bmove+=3;//bomb walking 
-        if(bmove%16==0)
+        if (bmove%16==0)
         {
           //b=!b;
-        if(b==0)
-          b=1;
-        else if(b==1)
-          b=0;
+          if (b==0)
+            b=1;
+          else if (b==1)
+            b=0;
         }
-        
-       image(bomb[b],bmove,500,100,100);
+
+        image(bomb[b], bmove, 500, 100, 100);
         //image(bomb[b],0,height-bomb[b].height,50,50);
-        if(bmove>=width)//resets all values when the bomb reaches the end
+        if (bmove>=width)//resets all values when the bomb reaches the end
         {
-          if(p==0)
+          if (p==0)
           {
             oldtime=millis();
           }
           newtime=millis();
           p++;
           //movie:
-          rect(0,0,width,height);
-            //tint(255, 20);
-            cursor(WAIT);
-            explosion.play();
-              //explosion.loop();
-            
-            image(explosion, 0, 0,800,600);
-           
-            if(newtime-oldtime>=5000)
-            {
-              i=0;
-              bo=false;
-              bmove=0;
-              xjoey=0;
-              cursor(ARROW);
-              p=0;
-              explosion.stop();
-            }
+          rect(0, 0, width, height);
+          //tint(255, 20);
+          cursor(WAIT);
+          explosion.play();
+          //explosion.loop();
+
+          image(explosion, 0, 0, 800, 600);
+
+          if (newtime-oldtime>=5000)
+          {
+            i=0;
+            bo=false;
+            bmove=0;
+            xjoey=0;
+            cursor(ARROW);
+            p=0;
+            explosion.stop();
+          }
         }
       }
     }
-  if(ke==true)
-  {
-    image(lockerkey,width/2-250,height/2-50,500,100);
-    if(p==0)
+    if (ke==true)
     {
-    oldtime=millis();
-    }
-    p++;
-    newtime=millis();
-    if(newtime-oldtime>=1000)
-    {
-      cursor(HAND);
-    String lockerkeywin= "You got the key! Click to continue to Ms.Gerstein's room!";
-    text(lockerkeywin,50,50,550,250);
-    
-      if(mousePressed)
+      image(lockerkey, width/2-250, height/2-50, 500, 100);
+      if (p==0)
       {
-       i=2; //this is the next background
-       //Gerstein's room
-       ke=false;
-       p=0;
+        oldtime=millis();
+      }
+      p++;
+      newtime=millis();
+      if (newtime-oldtime>=1000)
+      {
+        cursor(HAND);
+        String lockerkeywin= "You got the key! Click to continue to Ms.Gerstein's room!";
+        text(lockerkeywin, 50, 50, 550, 250);
+
+        if (mousePressed)
+        {
+          i=2; //this is the next background
+          //Gerstein's room
+          ke=false;
+          p=0;
+        }
       }
     }
-  }
-  if(i==2)
-  {
-    image(joeyChar,xjoey-50,yjoey-50,100,100);
-    cursor(ARROW);
-    
-    if(p==0)
+    if (i==2)
     {
-    oldtime=millis();
-    }
-    p++;
-    newtime=millis();
-    if(newtime-oldtime>=1000)
-    {
-      q++;
-      p=0;
-    }
-    if(q<=2)
-    {
-      xjoey=100;
-      yjoey=500;
-      if(q==1)
+      image(joeyChar, xjoey-50, yjoey-50, 100, 100);
+      cursor(ARROW);
+
+      if (p==0)
       {
-        xspeech=300;
+        oldtime=millis();
+      }
+      p++;
+      newtime=millis();
+      if (newtime-oldtime>=1000)
+      {
+        q++;
+        p=0;
+      }
+      if (q<=2)
+      {
+        xjoey=100;
+        yjoey=500;
+        if (q==1)
+        {
+          xspeech=300;
+        }
+        else
+        {
+          xspeech=0;
+        }
+        image(speech[q], xspeech, 0);
       }
       else
       {
-        xspeech=0;
+        // yjoey=500;
+        moveJoey();
       }
-      image(speech[q],xspeech,0);
-      
-    }
-    else
-    {
-     // yjoey=500;
-      moveJoey();
-    }
-   if(xjoey>=width-50)
-    {
-      i=3;
-      q=0;
-      xjoey=100;
-    }  
-    
-        
-    if(xjoey>=340&&xjoey<=600)
-    {
-      if(yjoey>=330&&yjoeyspeed<=0){
-      yjoey+=200;
+      if (xjoey>=width-50)
+      {
+        i=3;
+        q=0;
+        xjoey=100;
+      }  
+
+
+      if (xjoey>=340&&xjoey<=600)
+      {
+        if (yjoey>=330&&yjoeyspeed<=0) {
+          yjoey+=200;
+        }
+        if (yjoey>=330&&yjoeyspeed>0) {
+          yjoeyspeed=0;
+        }
       }
-      if(yjoey>=330&&yjoeyspeed>0){
-        yjoeyspeed=0;
-      }
-    }
-//    if(yjoey>=400&&yjoeyspeed>0&&xjoey>=380&&xjoey<=455){
-//      
-//    }
-      if(yjoey>=height+50)
+      //    if(yjoey>=400&&yjoeyspeed>0&&xjoey>=380&&xjoey<=455){
+      //      
+      //    }
+      if (yjoey>=height+50)
       {
         xjoey=0;
-        
       }
-      
-    }
-  
-  if(i==3)
-  {
-    if(q==0)
-    {
-      xjoey=0;
-      q++;
-    }
-    yjoey=(2.318)*xjoey+50;
-    xjoey++;
-    image(blackHole,330,500,300,200);
-    image(joeyChar,xjoey-50+175,yjoey-50,100,100);
-    if(yjoey>=500)
-    {
-      i++;
-      screenchange=true;
-      q=0;
-      p=0;
     }
 
-    
-  }
-  
-  //lvl 2
-  if(i==4)
-  {
-    Screen();
-    if(screenchange==false)
+    if (i==3)
     {
-    image(joeychar, xjoey, yjoey, joeyimagesize, joeyimagesize);
-  if (ringholding) {
-    image(ring, xjoey+joeyimagesize/1.5, yjoey, joeyimagesize/2, joeyimagesize/2);
-  }
-    //image(bikinibottom, 0, 0, 800, 600);
-    if (p==0)
+      if (q==0)
+      {
+        xjoey=0;
+        q++;
+      }
+      yjoey=(2.318)*xjoey+50;
+      xjoey++;
+      image(blackHole, 330, 500, 300, 200);
+      image(joeyChar, xjoey-50+175, yjoey-50, 100, 100);
+      if (yjoey>=500)
+      {
+        i++;
+        screenchange=true;
+        ragtime.pause();
+        ragtime.cue(0);
+        q=0;
+        p=0;
+      }
+    }
+
+    //lvl 2
+    if (i==4)
     {
-      xjoey=2;
-      yjoey=0;
-      p++;
-    }
-    if (yjoey<340) {
-      yjoey+=3;
-    }
-    joeyimagesize=map(xjoey, 0, width, 25, 100);
-    if (yjoey>=340) {
-      yjoey=xjoey*.29586+340;
-      moveJoey();
-    }
-    if (xjoey>=width)
-    {
-      i++;
-      xjoey=50;
-      yjoey=440;
-    }
-    if (ringappearing) {
-      for (int i=0;i<floatingring.length;i++) {
-        floatingring[i].display();
-        floatingring[i].bounce();
-        if (dist(xjoey+(joeyimagesize/2), yjoey+(joeyimagesize/2), floatingring[i].x+(floatingring[i].diam/2), floatingring[i].y+(floatingring[i].diam/2))<=(joeyimagesize/2)+(floatingring[i].diam/2)) {
-          ringholding=true;
-          ringappearing=false;
+      Screen();
+      if (screenchange==false)
+      {
+        image(joeychar, xjoey, yjoey, joeyimagesize, joeyimagesize);
+        if (ringholding) {
+          image(ring, xjoey+joeyimagesize/1.5, yjoey, joeyimagesize/2, joeyimagesize/2);
         }
-      }
-    }
-
-    for (int i=0; i<bubbles.length; i++) {
-      bubbles[i].display();
-      bubbles[i].bounce();
-    }
-    for (int i=0; i<mermaids.length; i++) {
-      mermaids[i].display();
-      mermaids[i].bounce();
-      if (dist(xjoey+(joeyimagesize/2), yjoey+(joeyimagesize/2), mermaids[i].x+(mermaids[i].diam/2), mermaids[i].y+(mermaids[i].diam/2))<=(joeyimagesize/2)+(mermaids[i].diam/2)) {
-        xjoey = 0;
-        ringholding=false;
-        ringappearing=true;
-      }
-    }
-    }
-  }
-  if(i==5)
-  {
-    image(joeychar, xjoey, yjoey, joeyimagesize, joeyimagesize);
-  if (ringholding) {
-    image(ring, xjoey+joeyimagesize/1.5, yjoey, joeyimagesize/2, joeyimagesize/2);
-  }
-    //image(goolagoon, 0, 0, 800, 600);
-    image(volcano, 650, 0, 150, 200);
-
-    moveJoey();
-    
-    if (xjoey>width) {
-      yjoey=365;//i think this does nothing.
-      joeyimagesize=75;
-      xjoey=width-joeyimagesize;
-    }
-    if (joeyimagesize==75) {
-      yjoey=-.3217*xjoey+580;
-    }
-    if (joeyimagesize==75&&xjoey<=591) {
-      yjoey=386;
-    }
-    if(joeyimagesize==75&&(xjoey+joeyimagesize>=width)){
-      xjoey=width-joeyimagesize;
-    }
-    if (joeyimagesize==75&&xjoey==505) {
-      joeyimagesize=50;
-      xjoey=440;
-    }
-    if (joeyimagesize==50) {
-      yjoey=-xjoey+815;
-      if (xjoey<440) {
-        xjoey=440;
-      }
-    }
-    if (xjoey>=627&&joeyimagesize==50) {
-      xjoey=627;
-      textSize(50);
-      if (ringholding) {
-        image(volcanospeechwin,width/2,50,250,200);
-        if(mousePressed)
+        //image(bikinibottom, 0, 0, 800, 600);
+        if (p==0)
+        {
+          xjoey=2;
+          yjoey=0;
+          p++;
+        }
+        if (yjoey<340) {
+          yjoey+=3;
+        }
+        joeyimagesize=map(xjoey, 0, width, 25, 100);
+        if (yjoey>=340) {
+          yjoey=xjoey*.29586+340;
+          moveJoey();
+        }
+        if (xjoey>=width)
         {
           i++;
-          screenchange=true;
+          xjoey=50;
+          yjoey=440;
+        }
+        if (ringappearing) {
+          for (int i=0;i<floatingring.length;i++) {
+            floatingring[i].display();
+            floatingring[i].bounce();
+            if (dist(xjoey+(joeyimagesize/2), yjoey+(joeyimagesize/2), floatingring[i].x+(floatingring[i].diam/2), floatingring[i].y+(floatingring[i].diam/2))<=(joeyimagesize/2)+(floatingring[i].diam/2)) {
+              ringholding=true;
+              ringappearing=false;
+            }
+          }
+        }
+
+        for (int i=0; i<bubbles.length; i++) {
+          bubbles[i].display();
+          bubbles[i].bounce();
+        }
+        for (int i=0; i<mermaids.length; i++) {
+          mermaids[i].display();
+          mermaids[i].bounce();
+          if (dist(xjoey+(joeyimagesize/2), yjoey+(joeyimagesize/2), mermaids[i].x+(mermaids[i].diam/2), mermaids[i].y+(mermaids[i].diam/2))<=(joeyimagesize/2)+(mermaids[i].diam/2)) {
+            xjoey = 0;
+            ringholding=false;
+            ringappearing=true;
+          }
         }
       }
-      if (ringholding==false) {
-       image(volcanospeechlose,width/2,50,250,200);
-        if (mousePressed) {
-          i--;
-          xjoey=0;
-          yjoey=0;
-        }
-      }
-    }
-    
-  }
-  
-  //vl 3
-  if(i==6)//NEXT LEVEL //or level 3 cuz were totes going out of order
-  {
-    
-    Screen();
-    if(screenchange==false)
-    {
-    ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
-    if(q==0)
-    {
-      yjoey=height-80;
-      xjoey=50;
-      q++;
     }
 
-  if(frameCount%25==0) {
-    nyancat.add(new Meteor());
-  }
-  for(int i=nyancat.size()-1; i>0; i--) {
-    Meteor cat = (Meteor)nyancat.get(i);
-    cat.display();
-    cat.move();
-    if(dist(xjoey,yjoey,cat.x+(cat.diam/2),cat.y+(cat.diam/2))<50+cat.diam/2) {
-      xjoey = 50;
-      nyancat.remove(i);
-      for(int j=nyancat.size()-1; i>0; i--) {
-        Meteor c = (Meteor)nyancat.get(j);
-        c.y = 0;
-      }
-    }
-    if(cat.life==0) {
-      nyancat.remove(i);
-    }
-  }
-  image(joeychar,xjoey-50,yjoey-50,100,100);
-  if(keyPressed) {
-    if(key==CODED) {
-      if(keyCode==LEFT) {
-        xjoey+=-2;
-      }
-      if(keyCode==RIGHT) {
-        xjoey+=2;
-      }
-    }
-  }
-    
-    if(xjoey>=width)
+    if (i==5)
     {
-      q=0;
-      i++;
+      image(joeychar, xjoey, yjoey, joeyimagesize, joeyimagesize);
+      if (ringholding) {
+        image(ring, xjoey+joeyimagesize/1.5, yjoey, joeyimagesize/2, joeyimagesize/2);
+      }
+      //image(goolagoon, 0, 0, 800, 600);
+      image(volcano, 650, 0, 150, 200);
+
+      moveJoey();
+
+      if (xjoey>width) {
+        yjoey=365;//i think this does nothing.
+        joeyimagesize=75;
+        xjoey=width-joeyimagesize;
+      }
+      if (joeyimagesize==75) {
+        yjoey=-.3217*xjoey+580;
+      }
+      if (joeyimagesize==75&&xjoey<=591) {
+        yjoey=386;
+      }
+      if (joeyimagesize==75&&(xjoey+joeyimagesize>=width)) {
+        xjoey=width-joeyimagesize;
+      }
+      if (joeyimagesize==75&&xjoey==505) {
+        joeyimagesize=50;
+        xjoey=440;
+      }
+      if (joeyimagesize==50) {
+        yjoey=-xjoey+815;
+        if (xjoey<440) {
+          xjoey=440;
+        }
+      }
+      if (xjoey>=627&&joeyimagesize==50) {
+        xjoey=627;
+        textSize(50);
+        if (ringholding) {
+          image(volcanospeechwin, width/2, 50, 250, 200);
+          if (mousePressed)
+          {
+            i++;
+            screenchange=true;
+            funsong.pause();
+            funsong.cue(0);
+          }
+        }
+        if (ringholding==false) {
+          image(volcanospeechlose, width/2, 50, 250, 200);
+          if (mousePressed) {
+            i--;
+            xjoey=0;
+            yjoey=0;
+          }
+        }
+      }
     }
-  }
-  }
-  if(i==7)
+
+    //vl 3
+    if (i==6)//NEXT LEVEL //or level 3 cuz were totes going out of order
+    {
+
+      Screen();
+      if (screenchange==false)
+      {
+        nyancatsong.play();
+        if(nyancatsong.position()>=nyancatsong.length()){
+          nyancatsong.cue(0);
+        }
+       // nyancatsong.loop();
+        ///MAKE SURE TO EDIT IT FOR IMAGE MODE CENTER CUZ YYEEAAA
+        if (q==0)
+        {
+          yjoey=height-80;
+          xjoey=50;
+          q++;
+        }
+
+        if (frameCount%25==0) {
+          nyancat.add(new Meteor());
+        }
+        for (int i=nyancat.size()-1; i>0; i--) {
+          Meteor cat = (Meteor)nyancat.get(i);
+          cat.display();
+          cat.move();
+          if (dist(xjoey, yjoey, cat.x+(cat.diam/2), cat.y+(cat.diam/2))<50+cat.diam/2) {
+            xjoey = 50;
+            nyancat.remove(i);
+            for (int j=nyancat.size()-1; i>0; i--) {
+              Meteor c = (Meteor)nyancat.get(j);
+              c.y = 0;
+            }
+          }
+          if (cat.life==0) {
+            nyancat.remove(i);
+          }
+        }
+        image(joeychar, xjoey-50, yjoey-50, 100, 100);
+        if (keyPressed) {
+          if (key==CODED) {
+            if (keyCode==LEFT) {
+              xjoey+=-2;
+            }
+            if (keyCode==RIGHT) {
+              xjoey+=2;
+            }
+          }
+        }
+
+        if (xjoey>=width)
+        {
+          q=0;
+          i++;
+        }
+      }
+    }
+     if(i==7)
   {
     if(q==0)
     {
@@ -610,9 +674,10 @@ void draw()
    moveJoey();
     
   }
-  println("X"+mouseX);
-  println("Y"+mouseY);
 
+  }
+      println("X"+mouseX);
+    println("Y"+mouseY);
 }
 
 //movie:

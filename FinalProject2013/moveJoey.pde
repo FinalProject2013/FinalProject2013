@@ -9,7 +9,7 @@ void moveJoey()
 
       if(keyCode==DOWN)
       {
-       // yjoey+=10;
+        yjoey+=10;
       }
       if(keyCode==LEFT)
       {
@@ -51,11 +51,6 @@ void moveJoey()
         if(i==6)
         {
           yjoey=520+yjoeychange;
-        }
-        //no jumping on i==7 boat lvl
-        if(i==11)
-        {
-          yjoey =( height-130)+yjoeychange;
         }
 
 }
