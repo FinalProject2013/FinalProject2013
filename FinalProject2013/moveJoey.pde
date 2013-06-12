@@ -52,5 +52,10 @@ void moveJoey()
         {
           yjoey=520+yjoeychange;
         }
+                  //no jumping on i==7 boat lvl
+          if(i==11)
+        {
+          yjoey =( height-130)+yjoeychange;
+        }
 
 }
