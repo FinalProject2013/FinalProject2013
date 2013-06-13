@@ -1,5 +1,6 @@
 PImage theadventuresof, mgmlogo;
 boolean startScreen=true;
+boolean instructions=false;
 int c=-400;
 int d=-400;
 int e=-600;
@@ -9,7 +10,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=6;//level start CHANGE IT BACK 
+int i=13;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -27,7 +28,7 @@ int oldtime=0;
 //int p=0;
 
 
-PImage images[]=new PImage[12];//backgrounds
+PImage images[]=new PImage[14];//backgrounds
 PImage bomb[]=new PImage[2];//bombs
 PImage lockerkey;
 PImage joeyChar;
@@ -60,7 +61,7 @@ float angle;
 import ddf.minim.*;
 
 Minim minim;
-AudioPlayer rugrats, nyancatsong, tinytim, ragtime, funsong;
+AudioPlayer rugrats, nyancatsong, tinytim, ragtime, funsong, darkmusic;
 
 boolean screenchange=true;
 int lvl=1;
@@ -96,6 +97,10 @@ float winitial = 209;
 float hinitial = 174;
 float stephs_i=1;
 
+//credits
+String credits[]= new String[11];
+int ycredits=500;
+PImage me, lolsteph, lolweronika;
 
 void setup()
 {
@@ -114,9 +119,14 @@ void setup()
   images[5]=loadImage("goo lagoon.jpg");
   //lvl 3
   images[6]=loadImage("6.jpg");//field//lv 3
-   images[7]=loadImage("7.jpg");//beach
-  
+   images[7]=loadImage("7.jpg");//beach  
+  //8cave
+  //9dragon
+  //10dragon spaz
   images[11]=loadImage("11.png");//cave fly away
+  //12victory
+//13credits?
+  images[13]=loadImage("0.jpg");//whatever for now
 
   bomb[0]=loadImage("bomb1.png");
   bomb[1]=loadImage("bomb2.png");
@@ -156,6 +166,8 @@ void setup()
   tinytim=minim.loadFile("Living In The Sunlight, Loving In The Moonlight.mp3");
   ragtime=minim.loadFile("Don't Jazz Me - James Scott.mp3");
   funsong=minim.loadFile("funsong.mp3");
+  //darkmusic=minim.loadFile("13 The Nightmare.m4a");
+  // darkmusic=minim.loadFile("The Nightmare.mp3");
   //rugrats.play();
 
 
@@ -186,19 +198,33 @@ void setup()
    xboat = width/2;
    //fly away dragon
     flydrag = loadImage("Flying Dragon Color.png");
+    
+    
+    //credits
+  credits[0]="THE ADVENTURES OF JOEY © 2013";
+  credits[1]="Head Programmer          Weronika Zamlynny";
+  credits[2]="Project Manager          Stephanie Wong";
+  credits[3]="Graphics/UI Designer     Joey Alamo";
+  credits[4]="Evil Mermaid             Weronika Zamlynny";
+  credits[5]="Doctor Who-Obsessed Dragon    Stephanie Wong";
+  credits[6]="Joey Alamo               Joey Alamo";
+  credits[7]="Guest Apperance:         Ms.Gerstein";
+  credits[8]="           ...";
+  credits[9]="Sorry for wasting your life";
+  credits[10]="No refunds";
+
+  me=loadImage("me.png");
+  lolsteph=loadImage("lolstephanie.png");
+  lolweronika=loadImage("lolweronika.png");
 }
 void draw()
 {
-  if (startScreen) {
-    if(tinytim.position()<=13000){
-   tinytim.cue(13000);
-    }
-    tinytim.play();
-    if(tinytim.position()>=tinytim.length()-10000){
-      tinytim.cue(13000);
-    }
+ music();
   
+  if (startScreen) {
     
+    if(!instructions){
+   
     background(34, 188, 242);
     c+=8;
     if (c>=0) {
@@ -225,13 +251,35 @@ void draw()
     text("JOEY ALAMO", 295+e, 500);
 
 if(mousePressed&&mouseX>=570&&mouseX<=750&&mouseY>=45&&mouseY<=120){
- startScreen=false;
- tinytim.pause();
- tinytim.cue(0);
+// startScreen=false;
+
  fill(255);
+ instructions=true;
     }
   }
-
+  if(instructions){
+    background(0,150,150);
+    String instructionstext= "Joey lost his ukulele! Oh No! In this game, guide him with the arrow keys to help him get it back!  ... Warning: This game may cause severe irration and includes exploding lockers, invisible obstacles, evil mermaids, demanding volcanoes, and a mega dragon.  Joey, Stephanie, and Weronika are not responsible for any brain damage caused while playing this game.... ";
+    textSize(30);
+   text(instructionstext,10,10,790,590);
+   if(p==0){
+     oldtime=millis();
+   }
+   p++;
+   newtime=millis();
+   if((newtime-oldtime>5000)){
+     String clicktostartgame= "Click to Start!";
+     text(clicktostartgame,100,500);
+     if(mousePressed){
+ instructions=!instructions;
+ startScreen=!startScreen; 
+ tinytim.pause();
+ tinytim.cue(0);
+ p=0;
+     }
+  }
+  }
+  }
   if (!startScreen) {  
     //joeys screen
     background(0);
@@ -254,7 +302,7 @@ if(mousePressed&&mouseX>=570&&mouseX<=750&&mouseY>=45&&mouseY<=120){
         if (xjoey>=626)
         {
           i++;
-          n=int(random(1, 6));
+          n=int(random(3, 6));
           //FOR DEBUGGING PURPOSES ALWAYS WIN
           //  n=5;//win
           //n=4;//lose
@@ -676,9 +724,35 @@ if((i==4||i==5)&&!screenchange){
   }
 
   }
+  if(i==12)
+{
+  //victory
+}
+if(i==13)
+{
+  
+  if (ycredits>=-800)
+  {
+    ycredits--;
+  }
+  background(0);
+ background(34, 188, 242);
+  textSize(30);
+  for (int j=0;j<credits.length;j++) {
+    text(credits[j], 50, ycredits+(100*j), 750, 100);
+  }
+  if (ycredits<=-800) {
+   
+  image(me, 400, -80, 350, 400);
+  image(lolsteph, 310,200, 200,350);
+  image(lolweronika,0,200,300,250);
+  }
+}
       println("X"+mouseX);
     println("Y"+mouseY);
 }
+
+
 
 //movie:
 void movieEvent(Movie m)
