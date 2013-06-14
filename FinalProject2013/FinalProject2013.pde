@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=8;//level start CHANGE IT BACK 
+int i=11;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -162,6 +162,7 @@ void setup()
   //9dragon
   images[9]=loadImage("Cave.png");
   //10dragon spaz
+  images[10]=loadImage("10.png");
   images[11]=loadImage("11.png");//cave fly away
   //12victory
   images[12]=loadImage("12.jpg");
@@ -987,6 +988,10 @@ q++;
   if(i==10)
   {
     //derpy dragon
+    if(mousePressed)
+    {
+      i++;
+    }
   }
   if(i==11)
   {
@@ -1002,7 +1007,7 @@ q++;
   hdragon = hinitial/stephs_i;
   stephs_i+=0.01;
   image(joeychar,xjoey,yjoey,100,100);
-  if(keyPressed)
+ /*if(keyPressed)
   {
     if(key==CODED)
     {
@@ -1015,8 +1020,14 @@ q++;
         xjoey+=2;
       }
     }
-  }
-
+    moveJoey();
+  }*/
+moveJoey();
+if(xjoey>=width)
+{
+  i++;
+  q=0;
+}
   }
 
   }
