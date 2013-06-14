@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=11;//level start CHANGE IT BACK 
+int i=8;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -207,7 +207,7 @@ void setup()
   tinytim=minim.loadFile("Living In The Sunlight, Loving In The Moonlight.mp3");
   ragtime=minim.loadFile("Don't Jazz Me - James Scott.mp3");
   funsong=minim.loadFile("funsong.mp3");
-  //darkmusic=minim.loadFile("13 The Nightmare.m4a");
+  darkmusic=minim.loadFile("13 Anastasia - The Nightmare.mp3");
   // darkmusic=minim.loadFile("The Nightmare.mp3");
   //rugrats.play();
 
@@ -494,7 +494,7 @@ if((i==4||i==5)&&!screenchange){
       }
       p++;
       newtime=millis();
-      if (newtime-oldtime>=1000)
+      if (newtime-oldtime>=3000)
       {
         q++;
         p=0;
@@ -776,7 +776,12 @@ if((i==4||i==5)&&!screenchange){
     //cliff
   image(joeychar,xjoey,yjoey,joeyimagesize,joeyimagesize);
   image(boat,xboat,yboat,boatwidth,boatheight);
+  if(speech2<5){
   image(steph,440,500,60,60);
+  }
+  else if(speech2>=5){
+   image(minidragon,440,500,60,60); 
+  }
   if(xjoey<403.90625 || yboat<442.1875)
   {
     xboat = xjoey-joeyimagesize/4;
@@ -812,9 +817,10 @@ if((i==4||i==5)&&!screenchange){
     {
       speech2=0;
       oldtime=millis();
+      q++;
     }
     newtime=millis();
-    println("YAY!");
+    println("YAY!   " + newtime + "  !!!!  " + oldtime);
     //DIALOGUE WITH STEPHANIE
     //idk how this works but when joey reaches this location
     //we should talk then I should morph into a dragon for like,
@@ -822,7 +828,7 @@ if((i==4||i==5)&&!screenchange){
     if(newtime-oldtime>=3000)
     {
        speech2++;
-      oldtime=millis();
+      oldtime=newtime;
     }
     if(speech2<=5)
     {
@@ -835,30 +841,35 @@ if((i==4||i==5)&&!screenchange){
       speech2x= 200;
       speech2y=200;
     }
-        if(speech2==1)
+     else if(speech2==1)
     {
       speech2x= 450;
       speech2y=300;
     }
-        if(speech2==2)
+    else if(speech2==2)
     {
       speech2x= 200;
       speech2y=200;
     }
-            if(speech2==3)
+     else if(speech2==3)
     {
       speech2x= 450;
       speech2y=300;
     }
-            if(speech2==4)
+    else if(speech2==4)
     {
       speech2x= 200;
       speech2y=200;
     }
-                if(speech2==5)
+    else if(speech2==5)
     {
       speech2x= 450;
       speech2y=300;
+    }
+    else if (speech2>5)
+    {
+      q=0;
+      i++;
     }
   }
   
