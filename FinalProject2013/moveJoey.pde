@@ -9,7 +9,7 @@ void moveJoey()
 
       if(keyCode==DOWN)
       {
-        yjoey+=10;
+       // yjoey+=10;
       }
       if(keyCode==LEFT)
       {
