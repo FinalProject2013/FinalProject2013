@@ -10,7 +10,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=13;//level start CHANGE IT BACK 
+int i=12;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -42,6 +42,18 @@ PImage blackHole;
 //lvl 3
 ArrayList nyancat = new ArrayList();
 PImage meteor;
+//victory
+PImage dragonlair, ukulele, mermaid, crown, pile, dragonhead;
+boolean holdUK;
+float xUK = 290;
+float yUK = 200;
+float xmer = 200;
+float ymer = -400;
+float xcrown = 490;
+float ycrown = -100;
+float gravy = 0.1;
+float xhead = 510;
+float yhead = 180;
 //PImage joeychar;
 
 boolean start = true;
@@ -112,11 +124,8 @@ void setup()
   images[2]=loadImage("2.jpg");//gersteins
   images[3]=loadImage("3.jpg");  //escalator
   //lvl 2
-
-  // bikinibottom=loadImage("bikini bottom.jpg");
-  //goolagoon=loadImage("goo lagoon.jpg");
-  images[4]=loadImage("bikini bottom.jpg");
-  images[5]=loadImage("goo lagoon.jpg");
+  images[4]=loadImage("4.jpg");
+  images[5]=loadImage("5.jpg");
   //lvl 3
   images[6]=loadImage("6.jpg");//field//lv 3
    images[7]=loadImage("7.jpg");//beach  
@@ -125,6 +134,7 @@ void setup()
   //10dragon spaz
   images[11]=loadImage("11.png");//cave fly away
   //12victory
+  images[12]=loadImage("12.jpg");
 //13credits?
   images[13]=loadImage("0.jpg");//whatever for now
 
@@ -199,6 +209,15 @@ void setup()
    //fly away dragon
     flydrag = loadImage("Flying Dragon Color.png");
     
+    //victory
+     // dragonlair = loadImage("Gold Pile.jpg");
+  ukulele = loadImage("Ukulele.png");
+ // joeychar = loadImage("joey.char.png");
+  mermaid = loadImage("Landed Mermaid.png");
+  crown = loadImage("Crown Color.png");
+  dragonhead = loadImage("Happy Dragon Done.png");
+  pile = loadImage("Gold Bit.png");
+ // yjoey = height-150;
     
     //credits
   credits[0]="THE ADVENTURES OF JOEY © 2013";
@@ -727,6 +746,83 @@ if((i==4||i==5)&&!screenchange){
   if(i==12)
 {
   //victory
+   // background(dragonlair);
+   if(q==0)
+   {
+     xjoey = -50;
+       yjoey = height-150;
+     q++;
+     //oldtime=millis();
+   }
+  image(joeychar,xjoey,yjoey,100,100);
+  image(ukulele,xUK,yUK,150,150);
+  image(mermaid,xmer,ymer,400,400);
+  image(crown,xcrown,ycrown);
+  image(dragonhead,xhead,yhead);
+  image(pile,0,0,width,height);
+  //boolean for holding ukulele and ukulele moving with Joey
+  if(xjoey == xUK)
+  {
+    holdUK = true; 
+  }
+  if(holdUK)
+  {
+    xUK = xjoey;
+    yUK = yjoey;
+  }
+  
+  //when Joey reaches top of hill
+  if(xjoey>=476 || yjoey<=69.19998)
+  {
+   
+    //movement: first crown falls, then mermaid falls
+    //then mermaid slides, then dragon pops out
+    if(ycrown<59)
+    {
+      ycrown+=3;
+    }
+    else if(ycrown>=59)
+    {
+      if(ymer<100)
+      {
+        ymer+=8;
+      }
+      else if(ymer>=100)
+      {
+        if(xmer>16 || ymer<316)
+        {
+          ymer = xmer*-1+300;
+          xmer-=2;
+        }
+        else if(xmer<=16 && xhead<610)
+        {
+          yhead--;
+          xhead++;
+          
+        }
+        else
+        {
+           if(q==1)
+    {
+      oldtime=millis();
+      q++;
+    }
+    newtime=millis();
+    if(newtime-oldtime>=5000)
+    {
+      
+      q=0;
+      i++;
+    }
+        }
+      }
+    }
+  }
+  else
+  {
+    yjoey = xjoey*-.8+height-150;
+    moveJoey();
+  }
 }
 if(i==13)
 {
