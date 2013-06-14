@@ -1,6 +1,6 @@
 PImage theadventuresof, mgmlogo;
-//boolean startScreen=true;
-boolean startScreen=false;//FOR DEBUGGING
+boolean startScreen=true;
+//boolean startScreen=false;//FOR DEBUGGING
 boolean instructions=false;
 int c=-400;
 int d=-400;
@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=9;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
