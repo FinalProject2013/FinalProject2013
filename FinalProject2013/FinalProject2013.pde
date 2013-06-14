@@ -1,6 +1,6 @@
 PImage theadventuresof, mgmlogo;
-//boolean startScreen=true;
-boolean startScreen=false;//FOR DEBUGGING
+boolean startScreen=true;
+//boolean startScreen=false;//FOR DEBUGGING
 boolean instructions=false;
 int c=-400;
 int d=-400;
@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=8;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -780,7 +780,7 @@ if((i==4||i==5)&&!screenchange){
   image(steph,440,500,60,60);
   }
   else if(speech2>=5){
-   image(minidragon,440,500,60,60); 
+   image(minidragon,400,350,254,231); 
   }
   if(xjoey<403.90625 || yboat<442.1875)
   {
@@ -1125,7 +1125,7 @@ if(xjoey>=width)
 }
 if(i==13)
 {
-  
+  fill(255);
   if (ycredits>=-800)
   {
     ycredits--;
