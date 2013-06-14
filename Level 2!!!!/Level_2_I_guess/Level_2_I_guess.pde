@@ -1,6 +1,5 @@
 PImage joeychar, bikinibottom, goolagoon, volcano, ringbubble, emptybubble, wermermaid;
 PImage ring, volcanospeechwin, volcanospeechlose;
-PImage wermermaid;
 Mermaid [] mermaids = new Mermaid [3];
 Mermaid [] bubbles=new Mermaid[30];
 Mermaid [] floatingring =new Mermaid[1];
