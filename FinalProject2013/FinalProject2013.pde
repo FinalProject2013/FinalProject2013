@@ -1,16 +1,17 @@
 PImage theadventuresof, mgmlogo;
-boolean startScreen=true;
+//boolean startScreen=true;
+boolean startScreen=false;//FOR DEBUGGING
 boolean instructions=false;
 int c=-400;
 int d=-400;
 int e=-600;
-float xjoey, yjoey;
+//float xjoey, yjoey;
 float yjoeyspeed;
 float yjoeychange;
 
 float gravity=.5;
 
-int i=0;//level start CHANGE IT BACK 
+int i=8;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -35,7 +36,10 @@ PImage joeyChar;
 
 
 PImage speech []= new PImage [3];//Speech bubbles 1
+PImage da[]=new PImage[6];//speech 2
+int speech2,speech2x,speech2y;
 int q=0;
+
 
 PImage blackHole;
 
@@ -87,7 +91,7 @@ PImage ring, volcanospeechwin, volcanospeechlose;
 BouncingStuff [] mermaids = new BouncingStuff [3];
 BouncingStuff [] bubbles=new BouncingStuff[30];
 BouncingStuff [] floatingring =new BouncingStuff[1];
-float joeyimagesize=50;
+//float joeyimagesize=50;
 int p=0;
 boolean nextImage=false;
 boolean bubble=false;
@@ -97,6 +101,30 @@ float ringx, ringy;
 //lvl 3 beach
 PImage boat;
 float xboat;
+//cliff
+PImage steph, minidragon;
+PImage d1, d2, d3, d4, d5, d6;
+float joeyimagesize = 50;
+float yboat;
+float boatwidth = joeyimagesize;
+float boatheight = joeyimagesize/3;
+//fight
+PImage dragoonthegreat, dvdpic,  frebll;
+Bomb[] fireballs = new Bomb[500];
+ArrayList dots = new ArrayList();
+float dx = 400;
+float dy = -100;
+float dspeed = 1;
+float xjoey = -50;
+float yjoey;
+int currentTime, oldTime; //affects Doctor Who DVD
+int ftimecurrent, ftimeold; //affects fireballs falling from sky class Bomb
+int flametimecurrent, flametimeold;
+int index = 0;
+int health = 100;
+boolean spewfire = false;
+boolean holdDVD = false;
+Doctor dvd;
 //fly away dragon
 //PImage bg;
 PImage flydrag;
@@ -130,7 +158,9 @@ void setup()
   images[6]=loadImage("6.jpg");//field//lv 3
    images[7]=loadImage("7.jpg");//beach  
   //8cave
+  images[8]=loadImage("Cliff.jpg");
   //9dragon
+  images[9]=loadImage("Cave.png");
   //10dragon spaz
   images[11]=loadImage("11.png");//cave fly away
   //12victory
@@ -206,6 +236,27 @@ void setup()
   }
    boat = loadImage("Boat Color.png");
    xboat = width/2;
+   //cliff
+     steph = loadImage("Stephanie Head.png");
+  minidragon = loadImage("Final Freaking Dragon.png");
+  da[0] = loadImage("Dialogue 1.png");
+  da[1] = loadImage("Dialogue 2.png");
+  da[2] = loadImage("Dialogue 3.png");
+  da[3] = loadImage("Dialogue 4.png");
+  da[4] = loadImage("Dialogue 5.png");
+  da[5] = loadImage("Dialogue 6.png");
+  //fight
+    //bg = loadImage("Cave.png");
+  dragoonthegreat = loadImage("Final Freaking Dragon.png");
+ // joeychar = loadImage("joey.char.png");
+  dvdpic = loadImage("Doctor Who DVD Small.jpg");
+  frebll = loadImage("Falling Fireball.png");
+ // yjoey = height-130;
+  dvd = new Doctor();
+  for(int i=0; i<=index;i++)
+  {
+    fireballs[i] = new Bomb();
+  }
    //fly away dragon
     flydrag = loadImage("Flying Dragon Color.png");
     
@@ -708,16 +759,229 @@ if((i==4||i==5)&&!screenchange){
     if(xjoey>=width)
     {
       q=0;
-      i=11;
-      //i++;//UNCOMMENT LATER!!!
+      //i=11;
+      i++;//UNCOMMENT LATER!!!
     }
   }
   if(i==8)
   {
+    if(q==0)
+    {
+      q++;
+      xjoey = 25/2;
+       yjoey = 200;
+       
+    }
     //cliff
+  image(joeychar,xjoey,yjoey,joeyimagesize,joeyimagesize);
+  image(boat,xboat,yboat,boatwidth,boatheight);
+  image(steph,440,500,60,60);
+  if(xjoey<403.90625 || yboat<442.1875)
+  {
+    xboat = xjoey-joeyimagesize/4;
+    yboat = yjoey+joeyimagesize/2;
+  }
+  if(xboat>=403.90625 || yboat>=442.1875)
+  {
+    xboat = 403.90625;
+    yboat = 442.1875;
+  }
+  //gives placement of boat, first moving then still
+  
+  //changes size of boat and joey
+  joeyimagesize = map(xjoey,0,width,25,100);
+  boatwidth = map(xboat,0,width,50,150);
+  boatheight = map(yboat,0,width,10,60);
+  yjoey = xjoey*.5+200;
+  moveJoey();
+  if(xjoey>=472 || yjoey>=436)
+  {
+    //GO TO NEXT SCENE BECAUSE JOEY IS AT THE CAVE MOUTH
+    if(speech2>=6&&mousePressed)
+    {
+        q=0;
+    i++;
+    }
+  
+  }
+  
+  if(xjoey>=388 && yjoey>=394)
+  {
+    if(q==1)
+    {
+      speech2=0;
+      oldtime=millis();
+    }
+    newtime=millis();
+    println("YAY!");
+    //DIALOGUE WITH STEPHANIE
+    //idk how this works but when joey reaches this location
+    //we should talk then I should morph into a dragon for like,
+    //three seconds and then vanish and then joey can move
+    if(newtime-oldtime>=3000)
+    {
+       speech2++;
+      oldtime=millis();
+    }
+    if(speech2<=5)
+    {
+      
+    image(da[speech2],speech2x,speech2y);
+    }
+
+    if(speech2==0)
+    {
+      speech2x= 200;
+      speech2y=200;
+    }
+        if(speech2==1)
+    {
+      speech2x= 450;
+      speech2y=300;
+    }
+        if(speech2==2)
+    {
+      speech2x= 200;
+      speech2y=200;
+    }
+            if(speech2==3)
+    {
+      speech2x= 450;
+      speech2y=300;
+    }
+            if(speech2==4)
+    {
+      speech2x= 200;
+      speech2y=200;
+    }
+                if(speech2==5)
+    {
+      speech2x= 450;
+      speech2y=300;
+    }
+  }
+  
+  //here is stuff that will happen with the timer, to help with placement
+  /*image(minidragon,400,350);
+  image(d1,200,200);
+  image(d2,450,300);
+  image(d3,200,200);
+  image(d4,450,300);
+  image(d5,200,200);
+  image(d6,450,300);*/
+  
   }
   if(i==9)
   {
+    if(q==0)
+    {
+      dx = 400;
+ dy = -100;
+ dspeed = 1;
+xjoey = -50;
+yjoey=height-130;
+q++;
+    }
+     currentTime = millis();
+  ftimecurrent = millis();
+  flametimecurrent = millis();
+  
+  image(dragoonthegreat,dx,dy);
+  dx+=dspeed;
+  if(dx>450 || dx<350)
+  {
+    dspeed = -dspeed;
+  }
+  image(joeychar,xjoey,yjoey,100,100);
+  if(keyPressed)
+  {
+    if(key==CODED)
+    {
+      if(keyCode==LEFT)
+      {
+        xjoey-=2;
+      }
+      if(keyCode==RIGHT)
+      {
+        xjoey+=2;
+      }
+    }
+  }
+
+  if(currentTime-oldTime>15000)
+  {
+    oldTime=currentTime;
+    dvd = new Doctor();
+  }
+  dvd.fall();
+  if(dist(xjoey,yjoey,dvd.x,dvd.y)<=50+dvd.h)
+  {
+    dvd.x = xjoey;
+    dvd.y = yjoey-25;
+    holdDVD = true;
+  }
+  if(xjoey>dx)
+  {
+    if(holdDVD)
+    {
+      //GO TO NEXT SCENE
+      i++;
+      q=0;
+    }
+    else if(holdDVD==false)
+    {
+      xjoey = -50;
+    }
+  }
+  
+  for(int i=0; i<=index; i++)
+  {
+    fireballs[i].show();
+    fireballs[i].move();
+    fireballs[i].burn();
+  }
+  if(ftimecurrent-ftimeold>2000)
+  {
+    ftimeold=ftimecurrent;
+    fireballs[index+1] = new Bomb();
+    index++;
+  }
+  
+  if(flametimecurrent-flametimeold>3000)
+  {
+    flametimeold=flametimecurrent;
+    spewfire=!spewfire;
+  }
+    
+  if(spewfire)
+  {
+    if(frameCount%3==0)
+    {
+      dots.add(new Fire());
+    }
+  }
+  for(int i=dots.size()-1; i>0; i--)
+  {
+    Fire d = (Fire)dots.get(i);
+    d.display();
+    d.move();
+    if(dist(xjoey,yjoey,d.x,d.y)<d.radius+50)
+    {
+      health-=0.00001;
+      if(health==0)
+      {
+        xjoey=-50;
+        health=100;
+      }
+    }
+    if(d.life==0)
+    {
+      dots.remove(i);
+    }
+  }
+  stroke(255,0,0);
+  textSize(20);
+  text("Health: " + health + "%",50,50);
     //cave
   }
   if(i==10)
@@ -738,8 +1002,21 @@ if((i==4||i==5)&&!screenchange){
   hdragon = hinitial/stephs_i;
   stephs_i+=0.01;
   image(joeychar,xjoey,yjoey,100,100);
-   moveJoey();
-    
+  if(keyPressed)
+  {
+    if(key==CODED)
+    {
+      if(keyCode==LEFT)
+      {
+        xjoey-=2;
+      }
+      if(keyCode==RIGHT)
+      {
+        xjoey+=2;
+      }
+    }
+  }
+
   }
 
   }
