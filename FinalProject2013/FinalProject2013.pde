@@ -1,6 +1,6 @@
 PImage theadventuresof, mgmlogo;
-//boolean startScreen=true;
-boolean startScreen=false;//FOR DEBUGGING
+boolean startScreen=true;
+//boolean startScreen=false;//FOR DEBUGGING
 boolean instructions=false;
 int c=-400;
 int d=-400;
@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=9;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -804,17 +804,17 @@ if((i==4||i==5)&&!screenchange){
   boatwidth = map(xboat,0,width,50,150);
   boatheight = map(yboat,0,width,10,60);
   yjoey = xjoey*.5+200;
-  moveJoey();
-  if(xjoey>=472 || yjoey>=436)
-  {
-    //GO TO NEXT SCENE BECAUSE JOEY IS AT THE CAVE MOUTH
-    if(speech2>=6&&mousePressed)
-    {
-        q=0;
-    i++;
-    }
-  
-  }
+//  moveJoey();
+//  if(xjoey>=472 || yjoey>=436)
+//  {
+//    //GO TO NEXT SCENE BECAUSE JOEY IS AT THE CAVE MOUTH
+//    if(speech2>=6&&mousePressed)
+//    {
+//        q=0;
+//    i++;
+//    }
+//  
+//  }
   
   if(xjoey>=388 && yjoey>=394)
   {
@@ -877,7 +877,8 @@ if((i==4||i==5)&&!screenchange){
       i++;
     }
   }
-  
+  else 
+    moveJoey();
   //here is stuff that will happen with the timer, to help with placement
   /*image(minidragon,400,350);
   image(d1,200,200);
