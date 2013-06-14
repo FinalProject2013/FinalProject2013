@@ -10,7 +10,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=12;//level start CHANGE IT BACK 
+int i=0;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
