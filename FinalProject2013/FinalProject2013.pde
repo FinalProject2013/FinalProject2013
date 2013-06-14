@@ -1,6 +1,6 @@
 PImage theadventuresof, mgmlogo;
-boolean startScreen=true;
-//boolean startScreen=false;//FOR DEBUGGING
+//boolean startScreen=true;
+boolean startScreen=false;//FOR DEBUGGING
 boolean instructions=false;
 int c=-400;
 int d=-400;
@@ -11,7 +11,7 @@ float yjoeychange;
 
 float gravity=.5;
 
-int i=0;//level start CHANGE IT BACK 
+int i=9;//level start CHANGE IT BACK 
 int n;
 int b;
 boolean bo=false;
@@ -195,7 +195,7 @@ void setup()
   //yjoey = height-80;
 
 
-  textAlign(CENTER);
+textAlign(CENTER);
   c1=color(82, 167, 240);
   c2=color(255, 100, 240);
   star=loadImage("star.png");
@@ -207,7 +207,7 @@ void setup()
   tinytim=minim.loadFile("Living In The Sunlight, Loving In The Moonlight.mp3");
   ragtime=minim.loadFile("Don't Jazz Me - James Scott.mp3");
   funsong=minim.loadFile("funsong.mp3");
-  darkmusic=minim.loadFile("13 Anastasia - The Nightmare.mp3");
+  darkmusic=minim.loadFile("TheNightmare.mp3");
   // darkmusic=minim.loadFile("The Nightmare.mp3");
   //rugrats.play();
 
@@ -291,6 +291,7 @@ void setup()
 void draw()
 {
  music();
+// darkmusic.play();
   
   if (startScreen) {
     
@@ -353,6 +354,9 @@ if(mousePressed&&mouseX>=570&&mouseX<=750&&mouseY>=45&&mouseY<=120){
   }
   if (!startScreen) {  
     //joeys screen
+    
+
+
     background(0);
     //  print(bo);
     image(images[i], 0, 0, 800, 600);
@@ -738,6 +742,7 @@ if((i==4||i==5)&&!screenchange){
         {
           q=0;
           i++;
+          nyancatsong.pause();
         }
       }
     }
@@ -993,7 +998,7 @@ q++;
   }
   stroke(255,0,0);
   textSize(20);
-  text("Health: " + health + "%",50,50);
+  text("Health: " + health + "%",150,50);
     //cave
   }
   if(i==10)
@@ -1038,6 +1043,8 @@ if(xjoey>=width)
 {
   i++;
   q=0;
+  darkmusic.pause();
+  darkmusic.cue(0);
 }
   }
 
@@ -1141,12 +1148,17 @@ if(i==13)
   image(me, 400, -80, 350, 400);
   image(lolsteph, 310,200, 200,350);
   image(lolweronika,0,200,300,250);
+  text("Click to return to start screen",width/2-100,550);
+  if(mousePressed){
+    startScreen=true;
+    instructions=false;
+    i=0;
   }
 }
       println("X"+mouseX);
     println("Y"+mouseY);
 }
-
+}
 
 
 //movie:
